@@ -1,25 +1,13 @@
-import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet,  StatusBar } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React, { Component } from 'react'
+import {  View } from 'react-native'
+import Icon from 'react-native-vector-icons/dist/Ionicons';
 
-function Home(props) {
+export default class Home extends Component {
+  render() {
     return (
-       
-        <SafeAreaView style={styles.container}>
-            
-            <View style={{flex : 1}}>
-                <Text>Hello Home</Text>
-            </View>
-        </SafeAreaView>
-    );
+      <View>
+        <Icon name="home-outline" size={300} color="#900" />
+      </View>
+    )
+  }
 }
-
-const styles = StyleSheet.create({
-    container : {
-        flex :1,
-        top : 40,
-        
-    }
-})
-
-export default Home;

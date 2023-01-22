@@ -47,7 +47,7 @@ function SplashScreen({ navigation }) {
           const value = await AsyncStorage.getItem('token')
           if(value !== null) {
             setTimeout(() => {
-              navigation.navigate('Home'); //this.props.navigation.navigate('Home')
+              navigation.navigate('BottomNavigation'); //this.props.navigation.navigate('Home')
           }, 6000);
           }
           else{

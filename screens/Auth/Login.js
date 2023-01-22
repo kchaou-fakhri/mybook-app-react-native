@@ -169,7 +169,7 @@ if(response.status == 200){
  
 console.log("Token : " + response.headers.get("authorization"))
  storeData(response.headers.get("authorization"))
-  navigation.navigate('Home')
+  navigation.navigate('BottomNavigation')
 
  
  

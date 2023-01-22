@@ -4,9 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Auth/Login';
 import Register from './screens/Auth/Register'
-import Home from './screens/Home/Home';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { View } from 'react-native';
+import BottomNavigation from './screens/Home/BottomNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +18,7 @@ function App(props) {
         <Stack.Screen  options={{ headerShown: false}} name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Login" options={{ headerShown: false}} component={Login} />
         <Stack.Screen name="Register" options={{ headerShown: false}} component={Register} />
-        <Stack.Screen name='Home' options={{headerShown : false}} component={Home}/>
+        <Stack.Screen name='BottomNavigation' options={{headerShown : false}} component={BottomNavigation}/>
       </Stack.Navigator>
   </NavigationContainer>
 
