@@ -15,6 +15,7 @@ function SplashScreen({ navigation }) {
        
             Animated.parallel([
                 Animated.sequence([
+                    Animated.timing(progress , {toValue: 0.5, duration:100,  useNativeDriver : true}),
                     Animated.timing(progress , {toValue: 1, duration:1000,  useNativeDriver : true}),
                  
                     Animated.timing(progress , {toValue: 1, duration:500,  useNativeDriver : true}),
