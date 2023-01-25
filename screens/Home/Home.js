@@ -9,9 +9,11 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Device from 'react-native-device-detection';
+import Review from 'dev0kch-review';
 
 import colors from '../utils/colors';
 
@@ -65,35 +67,77 @@ export default class Home extends Component {
         </ImageBackground>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title.title}</Text>
+          <Text style={styles.auther}>By John Welser</Text>
+        </View>
+      </View>
+    );
+
+    const TrendingItem = ({book}) => (
+      <View style={{flexDirection: 'row', padding: 10}}>
+        <Image
+          source={{uri: book.image}}
+          resizeMode={'stretch'}
+          style={styles.imageTrending}
+        />
+        <View style={{left: '10%', flex: 1}}>
+          <Text>{book.title}</Text>
+          <Text>By John Welser</Text>
+          <View style={{top: 10}}>
+            {new Review(5, colors.secandry, 4.5, 20).render()}
+          </View>
+        </View>
+        <View
+          style={{
+            right: '25%',
+            top: 20,
+          }}>
+          <Icon name="cart" size={40} color={colors.primary} />
         </View>
       </View>
     );
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.searchContainer}>
-          <TextInput placeholder="Search for Books..." style={styles.input} />
-          <Icon
-            style={styles.searchIcon}
-            name="search-outline"
-            color={colors.gray}
-            size={20}
-          />
-        </View>
+        <ScrollView nestedScrollEnabled>
+          <View style={styles.searchContainer}>
+            <TextInput placeholder="Search for Books..." style={styles.input} />
+            <Icon
+              style={styles.searchIcon}
+              name="search-outline"
+              color={colors.gray}
+              size={20}
+            />
+          </View>
 
-        <View style={styles.popularContainer}>
-          <Text style={styles.popularText}>Popular New</Text>
-          <Text style={styles.showAllText}>Show all</Text>
-        </View>
+          <View style={styles.popularContainer}>
+            <Text style={styles.popularText}>Popular New</Text>
+            <Text style={styles.showAllText}>Show all</Text>
+          </View>
 
-        <View style={styles.popularList}>
-          <FlatList
-            data={this.state.data}
-            horizontal={true}
-            renderItem={({item}) => <Item title={item} />}
-            keyExtractor={item => item.id}
-          />
-        </View>
+          <View style={styles.popularList}>
+            <ScrollView>
+              <FlatList
+                data={this.state.data}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({item}) => <Item title={item} />}
+                keyExtractor={item => item.id}
+              />
+            </ScrollView>
+          </View>
+
+          <View style={[styles.popularContainer, {top: 45}]}>
+            <Text style={styles.popularText}>Trending Books</Text>
+            <Text style={styles.showAllText}>Show all</Text>
+          </View>
+          <View style={styles.trendingBooks}>
+            <FlatList
+              data={this.state.data}
+              renderItem={({item}) => <TrendingItem book={item} />}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -102,8 +146,8 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 // Mobile Styles
-let imagewidth = width / 2 - 40;
-let imageHeight = 200;
+let imagewidth = width / 2 - 25;
+let imageHeight = height / 3.7;
 let searchWidth = width - 70;
 
 Dimensions.addEventListener('change', () => {
@@ -165,8 +209,8 @@ const styles = StyleSheet.create({
     top: 25,
   },
   popularText: {
-    paddingLeft: 40,
-    fontSize: 20,
+    paddingLeft: 20,
+    fontSize: 17,
     fontFamily: 'Quicksand-Regular',
     color: colors.textColor,
     fontWeight: 'bold',
@@ -187,15 +231,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   titleContainer: {
-    width: 140,
-    justifyContent: 'center',
+    width: imagewidth - 10,
+    justifyContent: 'flex-start',
+  },
+  auther: {
+    top: 10,
+    fontSize: 11,
   },
 
   title: {
     top: 10,
-    fontSize: 15,
-    fontWeight: '500',
+    fontSize: 13,
+    fontWeight: 'bold',
     textAlign: 'left',
+    color: colors.textColor,
   },
   popularList: {
     marginLeft: 10,
@@ -211,10 +260,20 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   backgroundImage: {
-    width: imagewidth,
+    width: imagewidth - 10,
     justifyContent: 'center',
     alignItems: 'center',
 
     height: imageHeight,
+  },
+  trendingBooks: {
+    top: 60,
+    left: 20,
+  },
+  imageTrending: {
+    width: 60,
+    height: 80,
+    padding: 10,
+    borderRadius: 7,
   },
 });

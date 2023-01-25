@@ -1,5 +1,13 @@
 import React from 'react';
-import {StyleSheet, StatusBar, Dimensions, View, Text} from 'react-native';
+import {
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+  View,
+  Text,
+  ScrollView,
+  ScrollViewBase,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Settings from '../settings/Settings.js';
@@ -10,6 +18,7 @@ import Search from '../Search/Search.js';
 import Profile from '../Profile/Profile.js';
 import MyBook from '../MyBook/MyBook.js';
 import colors from '../utils/colors.js';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
