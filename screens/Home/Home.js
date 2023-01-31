@@ -115,15 +115,13 @@ export default class Home extends Component {
           </View>
 
           <View style={styles.popularList}>
-            <ScrollView>
-              <FlatList
-                data={this.state.data}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => <Item title={item} />}
-                keyExtractor={item => item.id}
-              />
-            </ScrollView>
+            <FlatList
+              data={this.state.data}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({item}) => <Item title={item} />}
+              keyExtractor={item => item.id}
+            />
           </View>
 
           <View style={[styles.popularContainer, {top: 45}]}>
