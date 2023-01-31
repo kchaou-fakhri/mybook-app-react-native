@@ -6,10 +6,10 @@ import {
   TextInput,
   Dimensions,
   Text,
-  FlatList,
   Image,
   ImageBackground,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Device from 'react-native-device-detection';
@@ -49,9 +49,13 @@ export default class Home extends Component {
     }
   }
 
-  render(props) {
+  render(props ) {
+    const { navigation } = this.props;
     const Item = ({title}) => (
-      <View style={[styles.item]}>
+        <TouchableOpacity onPress={()=> navigation.navigate('Details', {params : title})}>
+
+
+      <View  style={[styles.item]}>
         <ImageBackground
           blurRadius={20}
           style={styles.backgroundImage}
@@ -70,9 +74,13 @@ export default class Home extends Component {
           <Text style={styles.auther}>By John Welser</Text>
         </View>
       </View>
+        </TouchableOpacity>
     );
 
     const TrendingItem = ({book}) => (
+        <TouchableOpacity onPress={()=> navigation.navigate('Details',{
+          params : book
+        })}>
       <View style={{flexDirection: 'row', padding: 10}}>
         <Image
           source={{uri: book.image}}
@@ -94,6 +102,7 @@ export default class Home extends Component {
           <Icon name="cart" size={40} color={colors.primary} />
         </View>
       </View>
+        </TouchableOpacity>
     );
 
     return (
