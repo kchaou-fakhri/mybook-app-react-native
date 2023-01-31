@@ -49,7 +49,7 @@ export default class Home extends Component {
     }
   }
 
-  render() {
+  render(props) {
     const Item = ({title}) => (
       <View style={[styles.item]}>
         <ImageBackground
@@ -98,7 +98,7 @@ export default class Home extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView nestedScrollEnabled>
+        <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
           <View style={styles.searchContainer}>
             <TextInput placeholder="Search for Books..." style={styles.input} />
             <Icon
@@ -115,13 +115,18 @@ export default class Home extends Component {
           </View>
 
           <View style={styles.popularList}>
-            <FlatList
-              data={this.state.data}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({item}) => <Item title={item} />}
-              keyExtractor={item => item.id}
-            />
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+
+
+            {this.state.data.map((item)=> <Item title={item} key={item.id} />)}
+            {/*<FlatList*/}
+            {/*  data={this.state.data}*/}
+            {/*  horizontal={true}*/}
+            {/*  showsHorizontalScrollIndicator={false}*/}
+            {/*  renderItem={({item}) => <Item title={item} />}*/}
+            {/*  keyExtractor={item => item.id}*/}
+            {/*/>*/}
+            </ScrollView>
           </View>
 
           <View style={[styles.popularContainer, {top: 45}]}>
@@ -129,11 +134,13 @@ export default class Home extends Component {
             <Text style={styles.showAllText}>Show all</Text>
           </View>
           <View style={styles.trendingBooks}>
-            <FlatList
-              data={this.state.data}
-              renderItem={({item}) => <TrendingItem book={item} />}
-              keyExtractor={item => item.id}
-            />
+
+            {this.state.data.map((item)=> <TrendingItem book={item} key={item.id} />)}
+            {/*<FlatList*/}
+            {/*  data={this.state.data}*/}
+            {/*  renderItem={({item}) => <TrendingItem book={item} />}*/}
+            {/*  keyExtractor={item => item.id}*/}
+            {/*/>*/}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -175,6 +182,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+
   },
   input: {
     top: 20,
@@ -267,6 +275,7 @@ const styles = StyleSheet.create({
   trendingBooks: {
     top: 60,
     left: 20,
+    marginBottom : '12%'
   },
   imageTrending: {
     width: 60,
