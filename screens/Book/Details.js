@@ -7,42 +7,69 @@ import {
     Image,
     ImageBackground,
     Dimensions,
-    TouchableOpacity, TouchableHighlight
+    TouchableOpacity, TouchableHighlight, ScrollView
 } from "react-native";
 import Device from "react-native-device-detection";
 import colors from "../utils/colors";
 import Review from "dev0kch-review";
 import Icon from 'react-native-vector-icons/dist/Ionicons';
-
-export default class Details extends Component{
-
-   state =  {heartIcon : "heart-outline"}
-    constructor(props) {
-        super(props);
-
-    }
+import {handlePress} from "react-native-paper/lib/typescript/components/RadioButton/utils";
 
 
+     export default function   Details(props) {
+         let des = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 
 
-    render() {
+       const [heartIcon, setHeartIcon]= useState("heart-outline")
+       const [landscape, setLandscape]= useState((Dimensions.get('window').width > Dimensions.get('window').height) ? "row" : "column")
+       const [description, setDescription]= useState(des.length>200 ? des.substring(0,200) : des)
+       const [seeMore, setSeeMore]= useState(" ...See More")
 
-        const { route, navigation } = this.props;
+
+         Dimensions.addEventListener('change', () => {
+
+            setLandscape(
+                ((Dimensions.get('window').width > Dimensions.get('window').height) ? "row" : "column")
+            )
+        });
+
+        const { route, navigation } = props;
+         if (des.length>=200){
+
+         }
+         else {
+
+         }
+
             const handleIcon = () =>{
-                if(this.state.heartIcon === "heart-outline"){
-                    this.setState({heartIcon : "heart"})
+                if(heartIcon === "heart-outline"){
+                    setHeartIcon("heart")
+
                 }
                 else {
-                    this.setState({heartIcon : "heart-outline"})
+                    setHeartIcon("heart-outline")
                 }
             }
 
-        return(
-            <SafeAreaView style={styles.container}>
+         function handleDescription() {
+             if (description.length<=200){
+                 setDescription(des)
+                 setSeeMore(" See less")
+             }
+             else {
+                 setDescription(des.substring(0,200))
+                 setSeeMore(" See more")
+             }
+
+         }
+
+         return(
+            <SafeAreaView style={[styles.container, {flexDirection : landscape}]}>
+
                 <View style={styles.bookContainer}>
                 <ImageBackground
                     blurRadius={20}
-                    style={styles.backgroundImage}
+                    style={(Dimensions.get('window').width < Dimensions.get('window').height) ? styles.backgroundImage: styles.backgroundImageLandscape}
                     imageStyle={{borderRadius: 10, opacity: 0.15}}
                     source={{uri: route.params.params.image}}>
                     <View style={styles.iconContainer}>
@@ -56,7 +83,7 @@ export default class Details extends Component{
 
                         <TouchableOpacity onPress={ handleIcon}>
                                 <View style={styles.iconStyle}>
-                                    <Icon name={this.state.heartIcon} color={colors.primary} size={34}/>
+                                    <Icon name={heartIcon} color={colors.primary} size={34}/>
                                 </View>
                         </TouchableOpacity>
                     </View>
@@ -81,18 +108,23 @@ export default class Details extends Component{
             </View>
 
 
-                <View style={styles.descriptionContainer}>
-                       <View style={styles.priceContainer}>
-                           <Text style={styles.title}>Description</Text>
-                           <Text style={styles.price}>$25.00</Text>
-                       </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.text}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</Text>
+
+                <View style={ (Dimensions.get('window').width < Dimensions.get('window').height) ? styles.descriptionContainer: styles.descriptionContainerLandscape}>
+                    <View style={(Dimensions.get('window').width < Dimensions.get('window').height) ? styles.priceContainer: styles.priceContainerLandscape}>
+                        <Text style={styles.title}>Description</Text>
+                        <Text style={styles.price}>$25.00</Text>
                     </View>
 
-                    <View style={styles.btnBuy}>
+                       <View style={(Dimensions.get('window').width < Dimensions.get('window').height) ? styles.textContainer: styles.textContainerLandscape}>
+                        <Text style={styles.text}>{description}
+                        <Text style={styles.seeMore} onPress={handleDescription}> {seeMore}</Text>
+                        </Text>
 
-                    <TouchableHighlight style={styles.touchableHighlight}>
+                       </View>
+
+                        <View style={(Dimensions.get('window').width < Dimensions.get('window').height) ? styles.btnBuy: styles.btnBuyLandscape}>
+
+                    <TouchableHighlight style={(Dimensions.get('window').width < Dimensions.get('window').height) ? styles.touchableHighlight: styles.touchableHighlightLandscape}>
                         <Text
                             style={[styles.loginBoutton]}
                             >
@@ -101,9 +133,11 @@ export default class Details extends Component{
                     </TouchableHighlight>
                     </View>
                 </View>
+
         </SafeAreaView>
+
         );
-    }
+
 
 }
 
@@ -114,37 +148,47 @@ var height = Dimensions.get('window').height;
 let imagewidth = width / 1.5;
 let imageHeight = height /2.5;
 let searchWidth = width - 70;
+let direction  = "column"
 
 Dimensions.addEventListener('change', () => {
     width = Dimensions.get('window').width;
     height = Dimensions.get('window').height;
 
+
     // Tablet Styles
     if (Device.isTablet) {
-        imagewidth = width / 1.5;
-        imageHeight = height / 2.5;
+        imagewidth = width / 2;
+        imageHeight = height / 2.1
         searchWidth = width - 70;
     }
-});
+    if (width > height) {
+        imagewidth = width / 2.5;
+        imageHeight = height / 2.1;
+        searchWidth = width - 70;
+
+    }
+
+    });
 
 if (Device.isTablet) {
-    imagewidth = width / 2;
-    imageHeight = height / 2.5;
+    imagewidth = width / 2.1;
+    imageHeight = height / 2.3;
     searchWidth = width - 70;
 }
-if (Device.isTablet && width > 1000) {
-    imagewidth = width / 2;
-    imageHeight = height / 2.5;
+if (width > height) {
+    imagewidth = width / 3;
+    imageHeight = height / 2;
     searchWidth = width - 70;
+    direction = "row"
 }
-
 
 const styles = StyleSheet.create({
     container : {
-        top : 60
+        top : 60,
+
+
     },
     bookContainer : {
-
         justifyContent : 'center',
         alignItems : 'center'
 
@@ -155,6 +199,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
         height: imageHeight+ 180,
+    },
+    backgroundImageLandscape: {
+        width: imagewidth + 80,
+        height: imageHeight+ 180,
+        justifyContent: 'center',
+        alignItems: 'center',
+        left : "10%",
+        top : "10%",
+
     },
 
 
@@ -212,11 +265,29 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         color: colors.textColor,
     },
+    descriptionContainerLandscape : {
+        top: "5%",
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'left',
+        color: colors.textColor,
+
+
+    },
     priceContainer: {
         flexDirection : 'row',
         justifyContent : 'space-between' ,
         marginLeft :"8%",
         marginRight :"8%",
+
+    },
+    priceContainerLandscape: {
+        flexDirection : 'row',
+        justifyContent : 'space-between' ,
+        width : "48%",
+        marginLeft :"8%",
+        marginRight :"8%",
+
 
     },
     price: {
@@ -230,6 +301,15 @@ const styles = StyleSheet.create({
         marginLeft :"8%",
         marginRight :"8%",
         top:"20%"
+    },
+    textContainerLandscape: {
+
+        width : '50%',
+        marginLeft :"8%",
+        marginRight :"8%",
+        top:"10%",
+        bottom : "10%",
+
     },
 
     text : {
@@ -254,11 +334,30 @@ const styles = StyleSheet.create({
         width: width /2.3,
         top: 60,
     },
+    touchableHighlightLandscape: {
+        height: 50,
+        width: width /4,
+        top: 60,
+
+    },
     btnBuy: {
         alignItems : 'flex-end',
         marginRight : "8%"
 
-    }
+    },
+    btnBuyLandscape: {
+       marginLeft : '8%',
+        position :'absolute',
+        marginTop : "40%",
+        left : "25%"
+
+
+
+
+    }, seeMore: {
+        fontFamily: 'Quicksand-Regular',
+        color: colors.secandry,
+    },
 
 
 })
