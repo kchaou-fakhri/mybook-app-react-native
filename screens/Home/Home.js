@@ -16,6 +16,7 @@ import Device from 'react-native-device-detection';
 import Review from 'dev0kch-review';
 
 import colors from '../utils/colors';
+import config from '../../config/Rest_API';
 
 export default class Home extends Component {
   state = {
@@ -30,7 +31,8 @@ export default class Home extends Component {
   async componentDidMount() {
     try {
       const response = await fetch(
-        'https://book-store-backend-production-9c87.up.railway.app/books',
+          config.BaseUrl +"books"
+
       );
 
       if (response != null) {
