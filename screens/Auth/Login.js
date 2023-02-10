@@ -18,6 +18,7 @@ import {LinesLoader} from 'react-native-indicator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import colors from '../utils/colors';
+import Rest_API from "../../config/Rest_API";
 
 export default function Login({navigation}) {
   const [username, setUsername] = useState('');
@@ -150,7 +151,8 @@ export default function Login({navigation}) {
 
   async function callApi() {
     const response = await fetch(
-      'https://book-store-spring-boot.azurewebsites.net/api/login',
+      Rest_API.BaseUrl+"authenticate",
+
       {
         method: 'POST',
         headers: {
