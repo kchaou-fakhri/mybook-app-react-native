@@ -51,7 +51,7 @@ function SplashScreen({ navigation }) {
               navigation.navigate('BottomNavigation'); //this.props.navigation.navigate('Home')
           }, 6000);
           }
-          else{
+         else{
             setTimeout(() => {
               navigation.navigate('Login'); //this.props.navigation.navigate('Login')
           }, 6000); 
