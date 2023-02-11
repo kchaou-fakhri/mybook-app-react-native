@@ -211,7 +211,7 @@ export default function Login({navigation}) {
               styles.conatiner,
               {justifyContent: 'center', width: '100%', height: '100%'},
             ]}
-            source={require('../../assets/back.png')}>
+            source={require('../../assets/background.png')}>
           <StatusBar barStyle={'dark-content'} translucent />
           <View
               style={{
@@ -220,10 +220,8 @@ export default function Login({navigation}) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-            <View style={styles.square}>
-              <Text style={styles.textLogo}>My Book</Text>
-            </View>
-            <View>
+
+            <View style={{ alignSelf : 'flex-start', alignItems : 'flex-start', justifyContent : 'flex-start'}} >
               <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
               <Text style={styles.textKeepYourMind}>Keep your mind</Text>
             </View>
@@ -336,6 +334,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Regular',
   },
   textWelecome: {
+    top : '5%',
+    left : 15,
     color: colors.primary,
     // transform: [{ rotate: '180deg'}],
     fontSize: 20,
@@ -347,10 +347,12 @@ const styles = StyleSheet.create({
     color: colors.primary,
     // transform: [{ rotate: '180deg'}],
     fontSize: 13,
-
+    top : '5%',
     color: colors.textColor,
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 30,
+    left : 15,
+
   },
   loginBoutton: {
     backgroundColor: colors.primary,
