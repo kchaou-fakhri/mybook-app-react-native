@@ -2,6 +2,7 @@ import React, { useEffect, useRef, Component } from 'react';
 import {Animated, Button, Image, SafeAreaView, StatusBar, StyleSheet, Text, View }  from 'react-native';
 import colors from '../utils/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import config from "../../config/ConfigWs";
 
 
 
@@ -45,11 +46,42 @@ function SplashScreen({ navigation }) {
       const getData = async () => {
         try {
           console.log("start")
-          const value = await AsyncStorage.getItem('token')
-          if(value !== null) {
-            setTimeout(() => {
-              navigation.navigate('BottomNavigation'); //this.props.navigation.navigate('Home')
-          }, 6000);
+          const token = await AsyncStorage.getItem('token')
+          if(token !== null) {
+
+              const response = await fetch(
+                  config.BaseUrl +"authenticate/validate_token",
+
+                  {
+                      method : 'POST',
+                      headers: {
+                          Accept: 'application/json',
+                          'Content-Type': 'application/json',
+
+                      },
+                      body : JSON.stringify({
+                          authorization:token,
+                      }),
+
+                  }
+
+              );
+              console.log(response.body);
+
+              if (response != null) {
+                  if (response.status == 200 && response.body== true) {
+                      setTimeout(() => {
+                          navigation.navigate('Login'); //this.props.navigation.navigate('Login')
+                      }, 6000);
+
+                  }
+                  else {
+                      setTimeout(() => {
+                          navigation.navigate('BottomNavigation'); //this.props.navigation.navigate('Home')
+                      }, 6000);
+                  }
+              }
+
           }
          else{
             setTimeout(() => {
