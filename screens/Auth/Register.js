@@ -184,23 +184,28 @@ export default function Register({navigation}) {
 
 
   return (
-    <SafeAreaView style={styles.conatiner}>
-            <ImageBackground style={[styles.conatiner ,{ justifyContent: 'center', width: '100%', height: '100%'}]}  source={require('../../assets/back.png')}>
+      <SafeAreaView style={styles.conatiner}>
+          <ImageBackground
+              style={[
+                  styles.conatiner,
+                  {justifyContent: 'center', width: '100%', height: '100%'},
+              ]}
+              source={require('../../assets/background-1.png')}>
+              <StatusBar barStyle={'dark-content'} translucent />
+              <View
+                  style={{
+                      flex: 1,
+                      top : '5%',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                  }}>
 
-      <StatusBar barStyle={'dark-content'} />
-      <View style={{ flex :1, 
-       
-       justifyContent : 'center',
-       alignItems : 'center',}}>
-              <View style={styles.square}>
-                  <Text style={styles.textLogo}>My Book</Text>
-              </View>
-              <View>
-                <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
-                <Text style={styles.textKeepYourMind}>Keep your mind</Text>
-              </View>
+                  <View style={{ alignSelf : 'flex-start', alignItems : 'flex-start', justifyContent : 'flex-start'}} >
+                      <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
+                      <Text style={styles.textKeepYourMind}>Keep your mind</Text>
+                  </View>
 
-              <View>
+                  <View>
                 <TextInput placeholder='username' onChangeText={handleChangeUserName}  style={styles.input}/>
                 <Text style={usernameTextError(checkUsername)}>{textErrorUsername}</Text>
 
@@ -269,26 +274,27 @@ const styles = StyleSheet.create({
      fontSize : 20,
      fontFamily : 'Quicksand-Regular'
   },
-  textWelecome : {
-    color : colors.primary,
-    // transform: [{ rotate: '180deg'}],
-     fontSize : 23,
-     fontFamily : 'Quicksand-bold',
-     color : colors.textColor,
-     textAlign : 'center'
+    textWelecome: {
+        top : '5%',
+        left : 15,
+        color: colors.primary,
+        // transform: [{ rotate: '180deg'}],
+        fontSize: 20,
 
+        color: colors.textColor,
+        textAlign: 'center',
+    },
+    textKeepYourMind: {
+        color: colors.primary,
+        // transform: [{ rotate: '180deg'}],
+        fontSize: 13,
+        top : '5%',
+        color: colors.textColor,
+        textAlign: 'center',
+        marginBottom: 30,
+        left : 15,
 
-  },
-  textKeepYourMind : {
-    color : colors.primary,
-    // transform: [{ rotate: '180deg'}],
-     fontSize : 15,
-     fontFamily : 'Quicksand-regular',
-     color : colors.textColor,
-     textAlign : 'center',
-     marginBottom : 40,
-
-  },
+    },
   loginBoutton :{
     
     backgroundColor : colors.primary,
