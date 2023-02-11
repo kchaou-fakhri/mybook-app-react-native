@@ -16,7 +16,8 @@ import Device from 'react-native-device-detection';
 import Review from 'dev0kch-review';
 
 import colors from '../utils/colors';
-import config from '../../config/Rest_API';
+import config from '../../config/ConfigWs';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class Home extends Component {
   state = {
@@ -30,8 +31,20 @@ export default class Home extends Component {
 
   async componentDidMount() {
     try {
+      const token = await AsyncStorage.getItem('token')
+      console.log(token);
       const response = await fetch(
-          config.BaseUrl +"books"
+          config.BaseUrl +"books",
+
+          {
+            method : 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'authorization': "Bearer "+token,
+            },
+
+          }
 
       );
 
@@ -41,7 +54,7 @@ export default class Home extends Component {
 
           this.setState({data: json});
 
-          //  console.log(json);
+         console.log(json);
         } else {
           console.log('wr : ' + response.json);
         }
