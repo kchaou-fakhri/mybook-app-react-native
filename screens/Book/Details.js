@@ -1,4 +1,4 @@
-import React,{Component, useState} from "react";
+import React,{ useState} from "react";
 import {
     View,
     SafeAreaView,
@@ -7,13 +7,13 @@ import {
     Image,
     ImageBackground,
     Dimensions,
-    TouchableOpacity, TouchableHighlight, ScrollView
+    TouchableOpacity, TouchableHighlight
 } from "react-native";
 import Device from "react-native-device-detection";
 import colors from "../utils/colors";
 import Review from "dev0kch-review";
 import Icon from 'react-native-vector-icons/dist/Ionicons';
-import {handlePress} from "react-native-paper/lib/typescript/components/RadioButton/utils";
+import {Modal } from "react-native-paper";
 
 
      export default function   Details(props) {
@@ -24,6 +24,7 @@ import {handlePress} from "react-native-paper/lib/typescript/components/RadioBut
        const [landscape, setLandscape]= useState((Dimensions.get('window').width > Dimensions.get('window').height) ? "row" : "column")
        const [description, setDescription]= useState(des.length>200 ? des.substring(0,200) : des)
        const [seeMore, setSeeMore]= useState(" ...See More")
+       const [visible, setVisible] = React.useState(false);
 
 
          Dimensions.addEventListener('change', () => {
@@ -52,19 +53,14 @@ import {handlePress} from "react-native-paper/lib/typescript/components/RadioBut
             }
 
          function handleDescription() {
-             if (description.length<=200){
-                 setDescription(des)
-                 setSeeMore(" See less")
-             }
-             else {
-                 setDescription(des.substring(0,200))
-                 setSeeMore(" See more")
-             }
+            setVisible(true)
 
          }
 
          return(
             <SafeAreaView style={[styles.container, {flexDirection : landscape}]}>
+
+
 
                 <View style={styles.bookContainer}>
                 <ImageBackground
@@ -94,12 +90,14 @@ import {handlePress} from "react-native-paper/lib/typescript/components/RadioBut
                             source={{uri: route.params.params.image}}
                         />
                     </View>
+
                     <View style={styles.imageDescriptionContainer}>
                         <Text style={styles.title}>{route.params.params.title}</Text>
                         <Text style={styles.auther}>By John Welser</Text>
 
 
                     </View>
+
                     <View style={{top: 25}}>
                         {new Review(5, colors.secandry, 4.5, 20).render()}
 
@@ -116,9 +114,12 @@ import {handlePress} from "react-native-paper/lib/typescript/components/RadioBut
                     </View>
 
                        <View style={(Dimensions.get('window').width < Dimensions.get('window').height) ? styles.textContainer: styles.textContainerLandscape}>
+
                         <Text style={styles.text}>{description}
+
                         <Text style={styles.seeMore} onPress={handleDescription}> {seeMore}</Text>
                         </Text>
+
 
                        </View>
 
@@ -133,6 +134,27 @@ import {handlePress} from "react-native-paper/lib/typescript/components/RadioBut
                     </TouchableHighlight>
                     </View>
                 </View>
+
+                <Modal animationType="slide" transparent={true}   visible={visible}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setVisible(false);
+                        }}>
+                        <View style={styles.centeredView}>
+                            <View style={styles.modalView}>
+                                <Text onPress={() => setVisible(false)} style={styles.closeBtn}>
+                                    ✕
+                                </Text>
+                                <Text style={styles.modalText}>Description</Text>
+
+                                <Text style={styles.textStyle}>
+                                    {des}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
+
 
         </SafeAreaView>
 
@@ -357,6 +379,30 @@ const styles = StyleSheet.create({
     }, seeMore: {
         fontFamily: 'Quicksand-Regular',
         color: colors.secandry,
+    },
+
+    textStyle: {
+        textAlign: 'left',
+        fontSize: 13,
+    },
+    modalText: {
+        marginTop: -10,
+        marginBottom: 15,
+        textAlign: 'center',
+        color: colors.textColor,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    closeBtn: {alignSelf: 'flex-end', fontSize: 20, color: colors.red, top: -10},
+
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
     },
 
 
