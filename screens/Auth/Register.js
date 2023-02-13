@@ -1,17 +1,22 @@
 import React, {useState} from 'react'
-import {  SafeAreaView,
-           View,
-           StyleSheet,
-           Text, 
-           TextInput, 
-           Dimensions, 
-           StatusBar,
-           ImageBackground,
-           TouchableHighlight,
-           KeyboardAvoidingView, 
-      } from 'react-native'
+import {
+    SafeAreaView,
+    View,
+    StyleSheet,
+    Text,
+    TextInput,
+    Dimensions,
+    StatusBar,
+    ImageBackground,
+    TouchableHighlight,
+    KeyboardAvoidingView, TouchableOpacity,
+} from 'react-native'
 
 import colors from '../utils/colors'
+import Rest_API from "../../config/ConfigWs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {Modal} from "react-native-paper";
+import {LinesLoader} from "react-native-indicator";
 
 export default function Register({navigation}) {
 
@@ -26,7 +31,9 @@ export default function Register({navigation}) {
   const [textErrorEmail, setTextErrorEmail] = useState("")
   const [textErrorUsername, setTextErrorUsername] = useState("")
   const [textErrorPassword, setTextErrorPassword] = useState("")
-
+  const [visible, setVisible] = React.useState(false);
+  const [isRegister, setIsRegister] = React.useState(false);
+  const [visibleLoading, setVisibleLoading] = React.useState(false);
 
 
   function handleChangeUserName(enteredText){
@@ -143,19 +150,70 @@ export default function Register({navigation}) {
       }
       else{
         setCheckEmail(false)
-       // verify.email = true
+        verify.email = true
       }
     }else{
       setTextErrorEmail("Email is required")
       setCheckEmail(true)
 
     }
+
+    if (verify.email === true
+            && verify.username === true
+                && verify.password === true){
+        setVisibleLoading(true);
+        callApi()
+    }
   }
 
+    async function callApi() {
+        const response = await fetch(
+            Rest_API.BaseUrl+"authenticate/register",
 
- 
+            {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    email : email
+                }),
+            },
+        );
 
-  function checkSymboleUsername(){
+        if (response.status == 200) {
+            setVisibleLoading(false);
+
+
+
+            navigation.navigate('BottomNavigation');
+        } else {
+            setVisibleLoading(false);
+
+            showAlert();
+        }
+
+        async function storeData(value) {
+            try {
+                await AsyncStorage.setItem('token', value);
+            } catch (e) {
+                // saving error
+            }
+        }
+    }
+
+    function showAlert() {
+        setVisible(true);
+    }
+
+
+
+
+
+    function checkSymboleUsername(){
     const sym = [" ","+","-","*","/",".","=","}",")","]",",","@","\"","`","|","[","'","{","#","~","&","²",";",":","!","%","$","£"]
       var check = true
         var index = 0;
@@ -174,7 +232,7 @@ export default function Register({navigation}) {
 
   function validateEmail()
   {
-    if(email.includes(".") && email.includes("@")){
+    if(email.includes(".") && email.includes("@") && !email.includes(" ")){
       return true
     }
     else {
@@ -190,7 +248,7 @@ export default function Register({navigation}) {
                   styles.conatiner,
                   {justifyContent: 'center', width: '100%', height: '100%'},
               ]}
-              source={require('../../assets/background-1.png')}>
+              source={require('../../assets/background.png')}>
               <StatusBar barStyle={'dark-content'} translucent />
               <View
                   style={{
@@ -223,9 +281,19 @@ export default function Register({navigation}) {
               <View>
               <TouchableHighlight 
                 style ={styles.touchableHighlight}>
-                <Text style={styles.loginBoutton} onPress={register}>Register</Text>
+                <Text style={[styles.loginBoutton,
+                    {color: visibleLoading ? colors.primary : colors.white},
+                ]} onPress={register}>Register</Text>
                 </TouchableHighlight>
-
+                  <View
+                      style={{
+                          justifyContent: 'center',
+                          display: visibleLoading ? 'flex' : 'none',
+                          bottom: 10,
+                          alignItems: 'center',
+                      }}>
+                      <LinesLoader barNumber={4} barHeight={30} color={colors.white} />
+                  </View>
                
               </View>   
             </View>
@@ -239,7 +307,28 @@ export default function Register({navigation}) {
   
             </View>
             </KeyboardAvoidingView>
-        </ImageBackground>
+
+              <Modal animationType="slide" transparent={true} visible={visible}>
+                  <TouchableOpacity
+                      onPress={() => {
+                          setVisible(false);
+                      }}>
+                      <View style={styles.centeredView}>
+                          <View style={styles.modalView}>
+                              <Text onPress={() => setVisible(false)} style={styles.closeBtn}>
+                                  ✕
+                              </Text>
+                              <Text style={styles.modalText}>Oops !</Text>
+
+                              <Text style={styles.textStyle}>
+                                  username is already exist
+                              </Text>
+                          </View>
+                      </View>
+                  </TouchableOpacity>
+              </Modal>
+
+          </ImageBackground>
     </SafeAreaView>
   )
 }
@@ -340,4 +429,28 @@ textGoToSinup : {
   fontWeight : 'bold',
   fontSize : 14,
 },
+
+    textStyle: {
+        textAlign: 'center',
+        fontSize: 13,
+    },
+    modalText: {
+        marginTop: -10,
+        marginBottom: 15,
+        textAlign: 'center',
+        color: colors.textColor,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    closeBtn: {alignSelf: 'flex-end', fontSize: 20, color: colors.red, top: -10},
+
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+    },
 })
