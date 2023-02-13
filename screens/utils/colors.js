@@ -1,5 +1,6 @@
 export default {
-  primary: '#325288',
+  //primary: '#325288',
+  primary: '#012a4a',
   secandry: '#FFC93C',
   third: '#CBEDD5',
   white: '#fff',
