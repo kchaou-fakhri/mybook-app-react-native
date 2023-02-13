@@ -211,7 +211,7 @@ export default function Login({navigation}) {
               styles.conatiner,
               {justifyContent: 'center', width: '100%', height: '100%'},
             ]}
-            source={require('../../assets/background-1.png')} >
+            source={require('../../assets/background.png')} >
           <StatusBar barStyle={'dark-content'} translucent />
           <View
               style={{
