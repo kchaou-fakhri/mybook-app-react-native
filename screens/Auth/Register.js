@@ -9,7 +9,7 @@ import {
     StatusBar,
     ImageBackground,
     TouchableHighlight,
-    KeyboardAvoidingView, TouchableOpacity,
+    KeyboardAvoidingView, TouchableOpacity, Image,
 } from 'react-native'
 
 import colors from '../utils/colors'
@@ -188,8 +188,10 @@ export default function Register({navigation}) {
             setVisibleLoading(false);
 
 
-
-            navigation.navigate('BottomNavigation');
+                setIsRegister(true)
+            setTimeout(() => {
+                navigation.navigate('Login'); //this.props.navigation.navigate('Login')
+            }, 3000);
         } else {
             setVisibleLoading(false);
 
@@ -322,6 +324,23 @@ export default function Register({navigation}) {
 
                               <Text style={styles.textStyle}>
                                   username is already exist
+                              </Text>
+                          </View>
+                      </View>
+                  </TouchableOpacity>
+              </Modal>
+
+              <Modal animationType="slide" transparent={true} visible={isRegister}>
+                  <TouchableOpacity
+                      onPress={() => {
+                          setVisible(false);
+                      }}>
+                      <View style={styles.centeredView}>
+                          <View style={styles.modalView}>
+
+                              <Image source={require('../../assets/img/check.png')} resizeMode={"stretch"} style={{width :'60%' , height : '73%', top : '5%'}}/>
+                              <Text style={[{top :'25%' }, styles.modalText]}>
+                                  Register successfully
                               </Text>
                           </View>
                       </View>
