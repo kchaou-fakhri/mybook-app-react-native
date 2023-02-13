@@ -64,6 +64,7 @@ export default class Home extends Component {
     }
   }
 
+
   render(props ) {
     const { navigation } = this.props;
     const Item = ({title}) => (
