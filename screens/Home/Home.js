@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   View,
@@ -49,7 +49,7 @@ export default class Home extends Component {
       );
 
       if (response != null) {
-        if (response.status == 200) {
+        if (response.status === 200) {
           const json = await response.json();
 
           this.setState({data: json});
@@ -136,7 +136,7 @@ export default class Home extends Component {
 
           <View style={styles.popularContainer}>
             <Text style={styles.popularText}>Popular New</Text>
-            <Text style={styles.showAllText}>Show all</Text>
+            <Text style={styles.showAllText} onPress={()=> navigation.navigate('BookList')} >Show all</Text>
           </View>
 
           <View style={styles.popularList}>
@@ -156,7 +156,7 @@ export default class Home extends Component {
 
           <View style={[styles.popularContainer, {top: 45}]}>
             <Text style={styles.popularText}>Trending Books</Text>
-            <Text style={styles.showAllText}>Show all</Text>
+            <Text style={styles.showAllText} onPress={()=> navigation.navigate('BookList')}>Show all</Text>
           </View>
           <View style={styles.trendingBooks}>
 
