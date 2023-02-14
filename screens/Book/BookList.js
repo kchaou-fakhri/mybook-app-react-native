@@ -1,5 +1,5 @@
 import React from "react";
-import {View, SafeAreaView} from "react-native";
+import {View, SafeAreaView, Text} from "react-native";
 
 
 export default function BookList() {
