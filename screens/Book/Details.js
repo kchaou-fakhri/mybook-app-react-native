@@ -22,7 +22,7 @@ import {Modal } from "react-native-paper";
 
        const [heartIcon, setHeartIcon]= useState("heart-outline")
        const [landscape, setLandscape]= useState((Dimensions.get('window').width > Dimensions.get('window').height) ? "row" : "column")
-       const [description, setDescription]= useState(des.length>200 ? des.substring(0,200) : des)
+       const [description, setDescription]= useState(des.length>200 ? des.substring(0,180) : des)
        const [seeMore, setSeeMore]= useState(" ...See More")
        const [visible, setVisible] = React.useState(false);
 
