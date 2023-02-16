@@ -115,7 +115,7 @@ export default class Home extends Component {
             right: '25%',
             top: 20,
           }}>
-          <Icon name="cart" size={40} color={colors.primary} />
+          <Icon name="ios-basket" size={40} color={colors.primary} />
         </View>
       </View>
         </TouchableOpacity>
