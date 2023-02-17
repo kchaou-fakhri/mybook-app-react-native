@@ -6,11 +6,12 @@ import Login from './screens/Auth/Login';
 import Register from './screens/Auth/Register'
 import BottomNavigation from './screens/Home/BottomNavigation';
 import Details from "./screens/Book/Details";
+import BookList from "./screens/Book/BookList";
 
 const Stack = createNativeStackNavigator();
 
 
-function App(props) {
+function App() {
   return (
   
 
@@ -20,7 +21,9 @@ function App(props) {
         <Stack.Screen name="Login" options={{ headerShown: false}} component={Login} />
         <Stack.Screen name="Register" options={{ headerShown: false}} component={Register} />
         <Stack.Screen name='BottomNavigation' options={{headerShown : false}} component={BottomNavigation}/>
-          <Stack.Screen name='Details' options={{headerShown : false}} component={Details}/>
+        <Stack.Screen name='Details' options={{headerShown : false}} component={Details}/>
+        <Stack.Screen name='BookList' options={{headerShown : false}} component={BookList}/>
+
       </Stack.Navigator>
   </NavigationContainer>
 

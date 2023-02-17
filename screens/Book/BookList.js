@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,51 +10,42 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Device from 'react-native-device-detection';
 import Review from 'dev0kch-review';
-
 import colors from '../utils/colors';
 import config from '../../config/ConfigWs';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default class Home extends Component {
-  state = {
-    data: [],
-  };
-
-  constructor(props) {
-    super(props);
-    this.getPopularBooks;
-  }
-
-  async componentDidMount() {
+export default function BookList(props) {
+  const [data, setData] = useState([]);
+  const {route, navigation} = props;
+  const fetchData = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
+      const token = await AsyncStorage.getItem('token');
       console.log(token);
       const response = await fetch(
-          config.BaseUrl +"books",
+        config.BaseUrl + 'books',
 
-          {
-            method : 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'authorization': "Bearer "+token,
-            },
-
-          }
-
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            authorization: 'Bearer ' + token,
+          },
+        },
       );
 
       if (response != null) {
         if (response.status === 200) {
           const json = await response.json();
 
-          this.setState({data: json});
+          setData(json);
 
-         console.log(json);
+          console.log(json);
         } else {
           console.log('wr : ' + response.json);
         }
@@ -62,41 +53,19 @@ export default class Home extends Component {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  render(props ) {
-    const { navigation } = this.props;
-    const Item = ({title}) => (
-        <TouchableOpacity onPress={()=> navigation.navigate('Details', {params : title})}>
-
-
-      <View  style={[styles.item]}>
-        <ImageBackground
-          blurRadius={20}
-          style={styles.backgroundImage}
-          imageStyle={{borderRadius: 10, opacity: 0.3}}
-          source={{uri: title.image}}>
-          <View style={{elevation: 12}}>
-            <Image
-              style={styles.image}
-              resizeMode="stretch"
-              source={{uri: title.image}}
-            />
-          </View>
-        </ImageBackground>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title.title}</Text>
-          <Text style={styles.auther}>By John Welser</Text>
-        </View>
-      </View>
-        </TouchableOpacity>
-    );
-
-    const TrendingItem = ({book}) => (
-        <TouchableOpacity onPress={()=> navigation.navigate('Details',{
-          params : book
-        })}>
+  const TrendingItem = ({book}) => (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Details', {
+          params: book,
+        })
+      }>
       <View style={{flexDirection: 'row', padding: 10}}>
         <Image
           source={{uri: book.image}}
@@ -118,60 +87,35 @@ export default class Home extends Component {
           <Icon name="ios-basket" size={40} color={colors.primary} />
         </View>
       </View>
-        </TouchableOpacity>
-    );
+    </TouchableOpacity>
+  );
 
-    return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
-          <View style={styles.searchContainer}>
-            <TextInput placeholder="Search for Books..." style={styles.input} />
-            <Icon
-              style={styles.searchIcon}
-              name="search-outline"
-              color={colors.gray}
-              size={20}
-            />
-          </View>
-
-          <View style={styles.popularContainer}>
-            <Text style={styles.popularText}>Popular New</Text>
-            <Text style={styles.showAllText} onPress={()=> navigation.navigate('BookList')} >Show all</Text>
-          </View>
-
-          <View style={styles.popularList}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-
-
-            {this.state.data.map((item)=> <Item title={item} key={item.id} />)}
-            {/*<FlatList*/}
-            {/*  data={this.state.data}*/}
-            {/*  horizontal={true}*/}
-            {/*  showsHorizontalScrollIndicator={false}*/}
-            {/*  renderItem={({item}) => <Item title={item} />}*/}
-            {/*  keyExtractor={item => item.id}*/}
-            {/*/>*/}
-            </ScrollView>
-          </View>
-
-          <View style={[styles.popularContainer, {top: 45}]}>
-            <Text style={styles.popularText}>Trending Books</Text>
-            <Text style={styles.showAllText} onPress={()=> navigation.navigate('BookList')}>Show all</Text>
-          </View>
-          <View style={styles.trendingBooks}>
-
-            {this.state.data.map((item)=> <TrendingItem book={item} key={item.id} />)}
-            {/*<FlatList*/}
-            {/*  data={this.state.data}*/}
-            {/*  renderItem={({item}) => <TrendingItem book={item} />}*/}
-            {/*  keyExtractor={item => item.id}*/}
-            {/*/>*/}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={'dark-content'} color={'#fff'} />
+      <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
+        <View style={styles.searchContainer}>
+          <TextInput placeholder="Search for Books..." style={styles.input} />
+          <Icon
+            style={styles.searchIcon}
+            name="search-outline"
+            color={colors.gray}
+            size={20}
+          />
+        </View>
+        <View style={[styles.popularContainer, {top: 45}]}>
+          <Text style={styles.popularText}>{route.params.params}</Text>
+        </View>
+        <View style={styles.trendingBooks}>
+          {data.map(item => (
+            <TrendingItem book={item} key={item.id} />
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
+
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
@@ -205,9 +149,9 @@ if (Device.isTablet && width > 1000) {
 
 const styles = StyleSheet.create({
   container: {
+    top: 30,
     flex: 1,
     backgroundColor: colors.white,
-
   },
   input: {
     top: 20,
@@ -300,7 +244,7 @@ const styles = StyleSheet.create({
   trendingBooks: {
     top: 60,
     left: 20,
-    marginBottom : '12%'
+    marginBottom: '12%',
   },
   imageTrending: {
     width: 60,
