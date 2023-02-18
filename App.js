@@ -6,14 +6,14 @@ import Login from './screens/Auth/Login';
 import Register from './screens/Auth/Register'
 import BottomNavigation from './screens/Home/BottomNavigation';
 import Details from "./screens/Book/Details";
-import BookList from "./screens/Book/BookList";
+import BookListSeeMore from "./screens/Book/BookListSeeMore";
 
 const Stack = createNativeStackNavigator();
 
 
 function App() {
   return (
-  
+
 
     <NavigationContainer>
       <Stack.Navigator >
@@ -22,7 +22,7 @@ function App() {
         <Stack.Screen name="Register" options={{ headerShown: false}} component={Register} />
         <Stack.Screen name='BottomNavigation' options={{headerShown : false}} component={BottomNavigation}/>
         <Stack.Screen name='Details' options={{headerShown : false}} component={Details}/>
-        <Stack.Screen name='BookList' options={{headerShown : false}} component={BookList}/>
+        <Stack.Screen name='BookList' options={{headerShown : false}} component={BookListSeeMore}/>
 
       </Stack.Navigator>
   </NavigationContainer>
