@@ -16,8 +16,8 @@ import {
 import {Modal} from 'react-native-paper';
 import {LinesLoader} from 'react-native-indicator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import colors from '../utils/colors';
+import Rest_API from "../../config/ConfigWs";
 
 export default function Login({navigation}) {
   const [username, setUsername] = useState('');
@@ -69,36 +69,50 @@ export default function Login({navigation}) {
   }
 
   function login() {
+
+    var allIsTrue = true
+
+
     if (username != '') {
       console.log(checkSymboleUsername());
 
       if (checkSymboleUsername()) {
-        setVisibleLoading(true);
+
         setCheckUsername(false);
         setCheckPassword(false);
 
-        callApi();
+
+
       } else {
         setTextErrorUsername('Username must contain only letters and numbers ');
         setCheckUsername(true);
+        allIsTrue = false
       }
     } else {
       setTextErrorUsername('Username is requierd');
       setCheckUsername(true);
+      allIsTrue = false
     }
     if (password == '') {
       setTextErrorPassword('Password is required');
       setCheckPassword(true);
+      allIsTrue = false
     }
     if (password != '') {
       if (password.length < 8) {
         setTextErrorPassword('Password must be at least 8 characters');
         setCheckPassword(true);
+        allIsTrue = false
       } else {
         setCheckPassword(false);
+
       }
     }
 
+    if (allIsTrue == true){
+      setVisibleLoading(true);
+      callApi()
+    }
     // setCheckPassword(true)
     //   console.log(username)
     //    console.log(password)
@@ -150,18 +164,19 @@ export default function Login({navigation}) {
 
   async function callApi() {
     const response = await fetch(
-      'https://book-store-spring-boot.azurewebsites.net/api/login',
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+        Rest_API.BaseUrl+"authenticate",
+
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
         },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      },
     );
 
     if (response.status == 200) {
@@ -190,107 +205,105 @@ export default function Login({navigation}) {
   }
 
   return (
-    <SafeAreaView style={styles.conatiner}>
-      <ImageBackground
-        style={[
-          styles.conatiner,
-          {justifyContent: 'center', width: '100%', height: '100%'},
-        ]}
-        source={require('../../assets/back.png')}>
-        <StatusBar barStyle={'dark-content'} translucent />
-        <View
-          style={{
-            flex: 1,
-
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <View style={styles.square}>
-            <Text style={styles.textLogo}>My Book</Text>
-          </View>
-          <View>
-            <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
-            <Text style={styles.textKeepYourMind}>Keep your mind</Text>
-          </View>
-
-          <View>
-            <TextInput
-              placeholder="username"
-              onChangeText={handleChangeUserName}
-              style={styles.input}
-            />
-            <Text style={usernameTextError(checkUsername)}>
-              {textErrorUsername}
-            </Text>
-          </View>
-
-          <View>
-            <TextInput
-              placeholder="Password"
-              onChangeText={handleChangePassword}
-              style={styles.input}
-            />
-            <Text style={passwordTextError(checkPassword)}>
-              {textErrorPassword}
-            </Text>
-          </View>
-          <View style={styles.touchableHighlight}>
-            <TouchableHighlight style={styles.touchableHighlight}>
-              <Text
-                style={[
-                  styles.loginBoutton,
-                  {color: visibleLoading ? colors.primary : colors.white},
-                ]}
-                onPress={login}>
-                Login
-              </Text>
-            </TouchableHighlight>
-
-            <View
+      <SafeAreaView style={styles.conatiner}>
+        <ImageBackground
+            style={[
+              styles.conatiner,
+              {justifyContent: 'center', width: '100%', height: '100%'},
+            ]}
+            source={require('../../assets/background.png')} >
+          <StatusBar barStyle={'dark-content'} translucent />
+          <View
               style={{
+                flex: 1,
+
                 justifyContent: 'center',
-                display: visibleLoading ? 'flex' : 'none',
-                bottom: 10,
                 alignItems: 'center',
               }}>
-              <LinesLoader barNumber={4} barHeight={30} color={colors.white} />
+
+            <View style={{ alignSelf : 'flex-start', alignItems : 'flex-start', justifyContent : 'flex-start'}} >
+              <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
+              <Text style={styles.textKeepYourMind}>Keep your mind</Text>
             </View>
 
-            <Text style={styles.forgotpassword}>Forgot Password?</Text>
-          </View>
-        </View>
-        <View style={styles.containerGoToSinup}>
-          <Text style={styles.textGoToSinup}>
-            Don't have an account?{' '}
-            <Text
-              onPress={() => navigation.navigate('Register')}
-              style={{color: colors.primary}}>
-              Register!
-            </Text>{' '}
-          </Text>
-        </View>
+            <View>
+              <TextInput
+                  placeholder="username"
+                  onChangeText={handleChangeUserName}
+                  style={styles.input}
+              />
+              <Text style={usernameTextError(checkUsername)}>
+                {textErrorUsername}
+              </Text>
+            </View>
 
-        <Modal animationType="slide" transparent={true} visible={visible}>
-          <TouchableOpacity
-            onPress={() => {
-              setVisible(false);
-            }}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text onPress={() => setVisible(false)} style={styles.closeBtn}>
-                  ✕
+            <View>
+              <TextInput
+                  placeholder="Password"
+                  onChangeText={handleChangePassword}
+                  style={styles.input}
+              />
+              <Text style={passwordTextError(checkPassword)}>
+                {textErrorPassword}
+              </Text>
+            </View>
+            <View style={styles.touchableHighlight}>
+              <TouchableHighlight style={styles.touchableHighlight}>
+                <Text
+                    style={[
+                      styles.loginBoutton,
+                      {color: visibleLoading ? colors.primary : colors.white},
+                    ]}
+                    onPress={login}>
+                  Login
                 </Text>
-                <Text style={styles.modalText}>Oops !</Text>
+              </TouchableHighlight>
 
-                <Text style={styles.textStyle}>
-                  username or password is incorrect
-                </Text>
+              <View
+                  style={{
+                    justifyContent: 'center',
+                    display: visibleLoading ? 'flex' : 'none',
+                    bottom: 10,
+                    alignItems: 'center',
+                  }}>
+                <LinesLoader barNumber={4} barHeight={30} color={colors.white} />
               </View>
+
+              <Text style={styles.forgotpassword}>Forgot Password?</Text>
             </View>
-          </TouchableOpacity>
-        </Modal>
-      </ImageBackground>
-    </SafeAreaView>
+          </View>
+          <View style={styles.containerGoToSinup}>
+            <Text style={styles.textGoToSinup}>
+              Don't have an account?{' '}
+              <Text
+                  onPress={() => navigation.navigate('Register')}
+                  style={{color: colors.primary}}>
+                Register!
+              </Text>{' '}
+            </Text>
+          </View>
+
+          <Modal animationType="slide" transparent={true} visible={visible}>
+            <TouchableOpacity
+                onPress={() => {
+                  setVisible(false);
+                }}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text onPress={() => setVisible(false)} style={styles.closeBtn}>
+                    ✕
+                  </Text>
+                  <Text style={styles.modalText}>Oops !</Text>
+
+                  <Text style={styles.textStyle}>
+                    username or password is incorrect
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </Modal>
+        </ImageBackground>
+      </SafeAreaView>
   );
 }
 
@@ -321,6 +334,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Regular',
   },
   textWelecome: {
+    top : '5%',
+    left : 15,
     color: colors.primary,
     // transform: [{ rotate: '180deg'}],
     fontSize: 20,
@@ -332,10 +347,12 @@ const styles = StyleSheet.create({
     color: colors.primary,
     // transform: [{ rotate: '180deg'}],
     fontSize: 13,
-
+    top : '5%',
     color: colors.textColor,
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 30,
+    left : 15,
+
   },
   loginBoutton: {
     backgroundColor: colors.primary,
