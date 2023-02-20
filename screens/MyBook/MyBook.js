@@ -19,6 +19,7 @@ export default class PDFExample extends React.Component {
       <View style={styles.container}>
         <Pdf
           source={source}
+          trustAllCerts={false}
           onLoadComplete={(numberOfPages, filePath) => {
             console.log(`Number of pages: ${numberOfPages}`);
           }}
