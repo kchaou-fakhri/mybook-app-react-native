@@ -115,7 +115,7 @@ function SplashScreen({navigation}) {
             },
           ]}>
           <Text style={[styles.text]}>MyBook</Text>
-          <Text style={[styles.smallText]}>Anther Wrold !</Text>
+          <Text style={[styles.smallText]}>Another World !</Text>
         </Animated.View>
       </View>
     </SafeAreaView>
@@ -162,13 +162,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: colors.white,
+    color: colors.secandry,
     // transform: [{ rotate: '180deg'}],
     fontSize: 5,
     fontFamily: 'Quicksand-Light',
   },
   smallText: {
-    color: colors.white,
+    color: colors.secandry,
     // transform: [{ rotate: '180deg'}],
     fontSize: 1.2,
     fontFamily: 'Quicksand-Light',
