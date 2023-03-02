@@ -17,6 +17,7 @@ import Review from 'dev0kch-review';
 import colors from '../utils/colors';
 import config from '../../config/ConfigWs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image';
 
 export default class Home extends Component {
   state = {
@@ -73,10 +74,10 @@ export default class Home extends Component {
             imageStyle={{borderRadius: 10, opacity: 0.3}}
             source={{uri: title.image}}>
             <View style={{elevation: 12}}>
-              <Image
+              <FastImage
                 style={styles.image}
-                resizeMode="stretch"
-                source={{uri: title.image}}
+                resizeMode={FastImage.resizeMode.stretch}
+                source={{uri: title.image, priority: FastImage.priority.normal}}
               />
             </View>
           </ImageBackground>
@@ -288,6 +289,7 @@ const styles = StyleSheet.create({
   popularList: {
     marginLeft: 10,
     top: 30,
+    height: imageHeight + 60,
   },
   image: {
     width: imagewidth - 60,
