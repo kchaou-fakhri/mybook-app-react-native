@@ -18,7 +18,6 @@ import colors from '../utils/colors';
 import config from '../../config/ConfigWs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
-
 export default class Home extends Component {
   state = {
     data: [],
