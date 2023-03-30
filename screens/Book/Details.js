@@ -10,12 +10,12 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Animated,
+  Modal,
 } from 'react-native';
 import Device from 'react-native-device-detection';
 import colors from '../utils/colors';
-import Review from 'dev0kch-review';
+import {Review} from 'dev0kch-review';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
-import {Modal} from 'react-native-paper';
 
 export default function Details(props) {
   const {route, navigation} = props;
@@ -29,7 +29,7 @@ export default function Details(props) {
       : 'column',
   );
   const [description, setDescription] = useState(
-    des.length > 200 ? des.substring(0, 180) : des,
+    des.length > 200 ? des.substring(0, 100) : des,
   );
   const [seeMore, setSeeMore] = useState(' ...See More');
   const [visible, setVisible] = React.useState(false);
@@ -120,7 +120,12 @@ export default function Details(props) {
           </View>
 
           <View style={{top: 25}}>
-            {new Review(5, colors.secandry, 4.5, 20).render()}
+            <Review
+              color={colors.secandry}
+              nbStart={5}
+              review={3.7}
+              size={20}
+            />
           </View>
         </ImageBackground>
       </View>
@@ -174,7 +179,7 @@ export default function Details(props) {
         </View>
       </View>
 
-      <Modal animationType="slide" transparent={true} visible={visible}>
+      <Modal animationType="slide" transparent={false} visible={visible}>
         <TouchableOpacity
           onPress={() => {
             setVisible(false);
@@ -408,7 +413,8 @@ const styles = StyleSheet.create({
   },
 
   textStyle: {
-    textAlign: 'left',
+    top: 15,
+    textAlign: 'center',
     fontSize: 13,
   },
   modalText: {

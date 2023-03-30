@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Device from 'react-native-device-detection';
-import Review from 'dev0kch-review';
+import {Review} from 'dev0kch-review';
 import colors from '../utils/colors';
 import config from '../../config/ConfigWs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -105,7 +105,12 @@ export default class Home extends Component {
             <Text>{book.title}</Text>
             <Text>By John Welser</Text>
             <View style={{top: 10}}>
-              {new Review(5, colors.secandry, 4.5, 20).render()}
+              <Review
+                color={colors.secandry}
+                nbStart={5}
+                review={3.7}
+                size={20}
+              />
             </View>
           </View>
           <View
