@@ -50,7 +50,8 @@ function SplashScreen({navigation}) {
 
   const getData = async () => {
     try {
-      console.log('start');
+      console.log('start verify token if valid');
+
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
         const response = await fetch(
@@ -62,15 +63,15 @@ function SplashScreen({navigation}) {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              authorization: token,
-            }),
+            body: token,
           },
         );
-        console.log(response.body);
-
+        const isToken = response.headers.get('check_token');
+        console.log('token : ' + token);
+        console.log('token : ' + token.length);
+        console.log('check token: ' + isToken);
         if (response != null) {
-          if (response.status == 200 && response.body == true) {
+          if (response.status == 200 && isToken === 'true') {
             setTimeout(() => {
               navigation.navigate('Login'); //this.props.navigation.navigate('Login')
             }, 6000);
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   },
   logoLabelBook: {
     fontSize: 30,
-    color: colors.secandry,
+    color: colors.white,
     fontStyle: 'normal',
     fontFamily: 'Quicksand-light',
   },
@@ -162,13 +163,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: colors.secandry,
+    color: colors.white,
     // transform: [{ rotate: '180deg'}],
     fontSize: 5,
     fontFamily: 'Quicksand-Light',
   },
   smallText: {
-    color: colors.secandry,
+    color: colors.white,
     // transform: [{ rotate: '180deg'}],
     fontSize: 1.2,
     fontFamily: 'Quicksand-Light',
