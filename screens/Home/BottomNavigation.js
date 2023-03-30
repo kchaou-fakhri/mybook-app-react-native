@@ -17,6 +17,7 @@ import Home from '../Home/Home.js';
 import Search from '../Search/Search.js';
 import Profile from '../Profile/Profile.js';
 import MyBook from '../MyBook/MyBook.js';
+import AllBooks from '../Book/AllBooks'
 import colors from '../utils/colors.js';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -69,6 +70,17 @@ export default function BottomNavigation(props) {
           ),
         }}
         component={Home}
+      />
+
+      <Tab.Screen
+        name="All"
+        options={{
+          tabBarLabel: 'All',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="grid" color={color} size={size} />
+          ),
+        }}
+        component={AllBooks}
       />
 
       <Tab.Screen

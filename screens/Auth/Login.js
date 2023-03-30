@@ -16,8 +16,8 @@ import {
 import {Modal} from 'react-native-paper';
 import {LinesLoader} from 'react-native-indicator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import colors from '../utils/colors';
+import Rest_API from '../../config/ConfigWs';
 
 export default function Login({navigation}) {
   const [username, setUsername] = useState('');
@@ -69,36 +69,43 @@ export default function Login({navigation}) {
   }
 
   function login() {
+    var allIsTrue = true;
+
     if (username != '') {
       console.log(checkSymboleUsername());
 
       if (checkSymboleUsername()) {
-        setVisibleLoading(true);
         setCheckUsername(false);
         setCheckPassword(false);
-
-        callApi();
       } else {
         setTextErrorUsername('Username must contain only letters and numbers ');
         setCheckUsername(true);
+        allIsTrue = false;
       }
     } else {
       setTextErrorUsername('Username is requierd');
       setCheckUsername(true);
+      allIsTrue = false;
     }
     if (password == '') {
       setTextErrorPassword('Password is required');
       setCheckPassword(true);
+      allIsTrue = false;
     }
     if (password != '') {
       if (password.length < 8) {
         setTextErrorPassword('Password must be at least 8 characters');
         setCheckPassword(true);
+        allIsTrue = false;
       } else {
         setCheckPassword(false);
       }
     }
 
+    if (allIsTrue == true) {
+      setVisibleLoading(true);
+      callApi();
+    }
     // setCheckPassword(true)
     //   console.log(username)
     //    console.log(password)
@@ -150,7 +157,8 @@ export default function Login({navigation}) {
 
   async function callApi() {
     const response = await fetch(
-      'https://book-store-spring-boot.azurewebsites.net/api/login',
+      Rest_API.BaseUrl + 'authenticate',
+
       {
         method: 'POST',
         headers: {
@@ -196,19 +204,21 @@ export default function Login({navigation}) {
           styles.conatiner,
           {justifyContent: 'center', width: '100%', height: '100%'},
         ]}
-        source={require('../../assets/back.png')}>
+        source={require('../../assets/background-1.png')}>
         <StatusBar barStyle={'dark-content'} translucent />
         <View
           style={{
             flex: 1,
-
+            width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <View style={styles.square}>
-            <Text style={styles.textLogo}>My Book</Text>
-          </View>
-          <View>
+          <View
+            style={{
+              alignSelf: 'flex-start',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+            }}>
             <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
             <Text style={styles.textKeepYourMind}>Keep your mind</Text>
           </View>
@@ -321,6 +331,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Regular',
   },
   textWelecome: {
+    top: '5%',
+    left: 15,
     color: colors.primary,
     // transform: [{ rotate: '180deg'}],
     fontSize: 20,
@@ -332,10 +344,11 @@ const styles = StyleSheet.create({
     color: colors.primary,
     // transform: [{ rotate: '180deg'}],
     fontSize: 13,
-
+    top: '5%',
     color: colors.textColor,
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 30,
+    left: 15,
   },
   loginBoutton: {
     backgroundColor: colors.primary,

@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   View,
@@ -14,10 +14,10 @@ import {
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Device from 'react-native-device-detection';
 import Review from 'dev0kch-review';
-
 import colors from '../utils/colors';
-import config from '../../config/Rest_API';
-
+import config from '../../config/ConfigWs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image';
 export default class Home extends Component {
   state = {
     data: [],
@@ -30,18 +30,28 @@ export default class Home extends Component {
 
   async componentDidMount() {
     try {
+      const token = await AsyncStorage.getItem('token');
+      console.log(token);
       const response = await fetch(
-          config.BaseUrl +"books"
+        config.BaseUrl + 'books',
 
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            authorization: 'Bearer ' + token,
+          },
+        },
       );
 
       if (response != null) {
-        if (response.status == 200) {
+        if (response.status === 200) {
           const json = await response.json();
 
           this.setState({data: json});
 
-          //  console.log(json);
+          console.log(json);
         } else {
           console.log('wr : ' + response.json);
         }
@@ -51,60 +61,62 @@ export default class Home extends Component {
     }
   }
 
-  render(props ) {
-    const { navigation } = this.props;
+  render(props) {
+    const {navigation} = this.props;
     const Item = ({title}) => (
-        <TouchableOpacity onPress={()=> navigation.navigate('Details', {params : title})}>
-
-
-      <View  style={[styles.item]}>
-        <ImageBackground
-          blurRadius={20}
-          style={styles.backgroundImage}
-          imageStyle={{borderRadius: 10, opacity: 0.3}}
-          source={{uri: title.image}}>
-          <View style={{elevation: 12}}>
-            <Image
-              style={styles.image}
-              resizeMode="stretch"
-              source={{uri: title.image}}
-            />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Details', {params: title})}>
+        <View style={[styles.item]}>
+          <ImageBackground
+            blurRadius={20}
+            style={styles.backgroundImage}
+            imageStyle={{borderRadius: 10, opacity: 0.3}}
+            source={{uri: title.image}}>
+            <View style={{elevation: 12}}>
+              <FastImage
+                style={styles.image}
+                resizeMode={FastImage.resizeMode.stretch}
+                source={{uri: title.image, priority: FastImage.priority.normal}}
+              />
+            </View>
+          </ImageBackground>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{title.title}</Text>
+            <Text style={styles.auther}>By John Welser</Text>
           </View>
-        </ImageBackground>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title.title}</Text>
-          <Text style={styles.auther}>By John Welser</Text>
         </View>
-      </View>
-        </TouchableOpacity>
+      </TouchableOpacity>
     );
 
     const TrendingItem = ({book}) => (
-        <TouchableOpacity onPress={()=> navigation.navigate('Details',{
-          params : book
-        })}>
-      <View style={{flexDirection: 'row', padding: 10}}>
-        <Image
-          source={{uri: book.image}}
-          resizeMode={'stretch'}
-          style={styles.imageTrending}
-        />
-        <View style={{left: '10%', flex: 1}}>
-          <Text>{book.title}</Text>
-          <Text>By John Welser</Text>
-          <View style={{top: 10}}>
-            {new Review(5, colors.secandry, 4.5, 20).render()}
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Details', {
+            params: book,
+          })
+        }>
+        <View style={{flexDirection: 'row', padding: 10}}>
+          <Image
+            source={{uri: book.image}}
+            resizeMode={'stretch'}
+            style={styles.imageTrending}
+          />
+          <View style={{left: '10%', flex: 1}}>
+            <Text>{book.title}</Text>
+            <Text>By John Welser</Text>
+            <View style={{top: 10}}>
+              {new Review(5, colors.secandry, 4.5, 20).render()}
+            </View>
+          </View>
+          <View
+            style={{
+              right: '25%',
+              top: 20,
+            }}>
+            <Icon name="ios-basket" size={40} color={colors.primary} />
           </View>
         </View>
-        <View
-          style={{
-            right: '25%',
-            top: 20,
-          }}>
-          <Icon name="cart" size={40} color={colors.primary} />
-        </View>
-      </View>
-        </TouchableOpacity>
+      </TouchableOpacity>
     );
 
     return (
@@ -122,31 +134,42 @@ export default class Home extends Component {
 
           <View style={styles.popularContainer}>
             <Text style={styles.popularText}>Popular New</Text>
-            <Text style={styles.showAllText}>Show all</Text>
+            <Text
+              style={styles.showAllText}
+              onPress={() => navigation.navigate('BookListSeeMore')}>
+              Show all
+            </Text>
           </View>
 
           <View style={styles.popularList}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-
-
-            {this.state.data.map((item)=> <Item title={item} key={item.id} />)}
-            {/*<FlatList*/}
-            {/*  data={this.state.data}*/}
-            {/*  horizontal={true}*/}
-            {/*  showsHorizontalScrollIndicator={false}*/}
-            {/*  renderItem={({item}) => <Item title={item} />}*/}
-            {/*  keyExtractor={item => item.id}*/}
-            {/*/>*/}
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              {this.state.data.map(item => (
+                <Item title={item} key={item.id} />
+              ))}
+              {/*<FlatList*/}
+              {/*  data={this.state.data}*/}
+              {/*  horizontal={true}*/}
+              {/*  showsHorizontalScrollIndicator={false}*/}
+              {/*  renderItem={({item}) => <Item title={item} />}*/}
+              {/*  keyExtractor={item => item.id}*/}
+              {/*/>*/}
             </ScrollView>
           </View>
 
           <View style={[styles.popularContainer, {top: 45}]}>
             <Text style={styles.popularText}>Trending Books</Text>
-            <Text style={styles.showAllText}>Show all</Text>
+            <Text
+              style={styles.showAllText}
+              onPress={() => navigation.navigate('BookListSeeMore')}>
+              Show all
+            </Text>
           </View>
           <View style={styles.trendingBooks}>
-
-            {this.state.data.map((item)=> <TrendingItem book={item} key={item.id} />)}
+            {this.state.data.map(item => (
+              <TrendingItem book={item} key={item.id} />
+            ))}
             {/*<FlatList*/}
             {/*  data={this.state.data}*/}
             {/*  renderItem={({item}) => <TrendingItem book={item} />}*/}
@@ -193,7 +216,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-
   },
   input: {
     top: 20,
@@ -266,6 +288,7 @@ const styles = StyleSheet.create({
   popularList: {
     marginLeft: 10,
     top: 30,
+    height: imageHeight + 60,
   },
   image: {
     width: imagewidth - 60,
@@ -286,7 +309,7 @@ const styles = StyleSheet.create({
   trendingBooks: {
     top: 60,
     left: 20,
-    marginBottom : '12%'
+    marginBottom: '12%',
   },
   imageTrending: {
     width: 60,
