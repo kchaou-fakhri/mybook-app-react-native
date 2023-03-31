@@ -10,7 +10,7 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
-import Review from 'dev0kch-review';
+import {Review} from 'dev0kch-review';
 import colors from '../utils/colors';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Device from 'react-native-device-detection';
@@ -72,7 +72,12 @@ export default function BookListSeeMore({navigation}) {
           <Text>{book.title}</Text>
           <Text>By John Welser</Text>
           <View style={{top: 10}}>
-            {new Review(5, colors.secandry, 4.5, 20).render()}
+            <Review
+              color={colors.secandry}
+              nbStart={5}
+              review={3.7}
+              size={20}
+            />
           </View>
         </View>
         <View

@@ -254,7 +254,7 @@ export default function Register({navigation}) {
           styles.conatiner,
           {justifyContent: 'center', width: '100%', height: '100%'},
         ]}
-        source={require('../../assets/background.png')}>
+        source={require('../../assets/background-1.png')}>
         <StatusBar barStyle={'dark-content'} translucent />
         <View
           style={{
