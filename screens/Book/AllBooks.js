@@ -11,6 +11,7 @@ import {
   Dimensions,
   Modal,
   Pressable,
+  Touchable,
 } from 'react-native';
 import {Review, Chip} from 'dev0kch-review';
 import colors from '../utils/colors';
@@ -20,13 +21,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfigWs from '../../config/ConfigWs';
 import {Slider} from '@miblanchard/react-native-slider';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {RadioButton} from 'react-native-paper';
 
 export default function AlBooks({navigation}) {
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [price, setPrice] = useState(10);
-  const [isCheckedArab, setIsCheckedArab] = useState(false);
-  const [chip, setChip] = useState('outline');
+  const [categoryAdventure, setCategoryAdventure] = useState(false);
+  const [categoryClassics, setCategoryClassics] = useState(false);
+  const [categoryCrime, setCategoryCrime] = useState(false);
+  const [categoryFantasy, setCategoryFantasy] = useState(false);
+  const [categoryHistorical, setCategoryHistorical] = useState(false);
+  const [categoryHorror, setCategoryHorror] = useState(false);
+  const [categoryHumour, setCategoryHumour] = useState(false);
+  const [categoryRomance, setCategoryRomance] = useState(false);
+  const [categoryWar, setCategoryWar] = useState(false);
+  const [categoryWomens, setCategoryWomens] = useState(false);
+  const [categoryShort, setCategoryShort] = useState(false);
+  const [checked, setChecked] = React.useState('first');
 
   const fetchData = async () => {
     try {
@@ -56,14 +68,6 @@ export default function AlBooks({navigation}) {
       }
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const handlChip = () => {
-    if (chip === 'outline') {
-      setChip('fill');
-    } else {
-      setChip('outline');
     }
   };
 
@@ -126,7 +130,6 @@ export default function AlBooks({navigation}) {
             size={30}
           />
         </View>
-      
 
         <View style={styles.trendingBooks}>
           {data.map(item => (
@@ -135,111 +138,352 @@ export default function AlBooks({navigation}) {
         </View>
       </ScrollView>
 
-      <Modal animationType="fade" visible={modalVisible}>
+      <Modal animationType="slide" visible={modalVisible}>
         <View style={modelStyles.centeredView}>
           <Text style={modelStyles.title}> Filter </Text>
-          <View style={modelStyles.optionsContainer}>
-            <View style={modelStyles.categoryContainer}>
-              <Text style={modelStyles.categoryTitle}>Categories</Text>
-              <View>
-                <View style={{flexDirection: 'row', paddingTop: 10}}>
-                  <Chip
-                    onPress={handlChip}
-                    text={'Adventure stories'}
-                    textColor={colors.textColor}
-                    style={{marginLeft: 10}}
-                  />
-                  <Chip
-                    text={'Classics'}
-                    textColor={colors.textColor}
-                    style={{marginLeft: 10}}
-                  />
-                  <Chip
-                    text={'Crime'}
-                    textColor={colors.textColor}
-                    style={{marginLeft: 10}}
-                  />
+          <ScrollView
+            nestedScrollEnabled
+            showsVerticalScrollIndicator={false}
+            style={{width: '100%', flex: 1}}>
+            <View style={modelStyles.optionsContainer}>
+              <View style={modelStyles.categoryContainer}>
+                <Text style={modelStyles.categoryTitle}>Categories</Text>
+                <View>
+                  <View style={{flexDirection: 'row', paddingTop: 10}}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryAdventure(
+                          categoryAdventure === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        text={'Adventure stories'}
+                        textColor={colors.textColor}
+                        color={colors.primary}
+                        type={categoryAdventure === false ? 'outline' : 'fill'}
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryClassics(
+                          categoryClassics === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        color={colors.primary}
+                        type={categoryClassics === false ? 'outline' : 'fill'}
+                        text={'Classics'}
+                        textColor={colors.textColor}
+                        style={{marginLeft: 10}}
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryCrime(categoryCrime === false ? true : false)
+                      }>
+                      <Chip
+                        color={colors.primary}
+                        type={categoryCrime === false ? 'outline' : 'fill'}
+                        text={'Crime'}
+                        textColor={colors.textColor}
+                        style={{marginLeft: 10}}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{flexDirection: 'row', paddingTop: 10}}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryFantasy(
+                          categoryFantasy === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        color={colors.primary}
+                        type={categoryFantasy === false ? 'outline' : 'fill'}
+                        text={'Fantasy'}
+                        style={{}}
+                        textColor={colors.textColor}
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryHistorical(
+                          categoryHistorical === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        color={colors.primary}
+                        type={categoryHistorical === false ? 'outline' : 'fill'}
+                        style={{marginLeft: 10}}
+                        text={'Historical fiction'}
+                        textColor={colors.textColor}
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryHorror(
+                          categoryHorror === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        color={colors.primary}
+                        type={categoryHorror === false ? 'outline' : 'fill'}
+                        style={{marginLeft: 10}}
+                        text={'Horror'}
+                        textColor={colors.textColor}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{flexDirection: 'row', paddingTop: 10}}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryHumour(
+                          categoryHumour === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        color={colors.primary}
+                        type={categoryHumour === false ? 'outline' : 'fill'}
+                        text={'Humour and satire'}
+                        textColor={colors.textColor}
+                        style={{}}
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryRomance(
+                          categoryRomance === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        text={'Romance'}
+                        color={colors.primary}
+                        type={categoryRomance === false ? 'outline' : 'fill'}
+                        style={{marginLeft: 10}}
+                        textColor={colors.textColor}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{flexDirection: 'row', paddingTop: 10}}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryWar(categoryWar === false ? true : false)
+                      }>
+                      <Chip
+                        text={'War'}
+                        color={colors.primary}
+                        type={categoryWar === false ? 'outline' : 'fill'}
+                        textColor={colors.textColor}
+                        style={{}}
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryWomens(
+                          categoryWomens === false ? true : false,
+                        )
+                      }>
+                      <Chip
+                        text={'Women’s fiction'}
+                        style={{marginLeft: 10}}
+                        color={colors.primary}
+                        type={categoryWomens === false ? 'outline' : 'fill'}
+                        textColor={colors.textColor}
+                      />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        setCategoryShort(categoryShort === false ? true : false)
+                      }>
+                      <Chip
+                        color={colors.primary}
+                        type={categoryShort === false ? 'outline' : 'fill'}
+                        text={'Short stories'}
+                        style={{marginLeft: 10}}
+                        textColor={colors.textColor}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={{flexDirection: 'row', paddingTop: 10}}>
-                  <Chip
-                    text={'Fantasy'}
-                    style={{marginLeft: 10}}
-                    textColor={colors.textColor}
-                  />
-                  <Chip
-                    style={{marginLeft: 10}}
-                    text={'Historical fiction'}
-                    textColor={colors.textColor}
-                  />
-                  <Chip
-                    style={{marginLeft: 10}}
-                    text={'Horror'}
-                    textColor={colors.textColor}
-                  />
+              </View>
+
+              <View style={modelStyles.sliderContainer}>
+                <Text style={[modelStyles.categoryTitle, {marginTop: 30}]}>
+                  Price Range
+                </Text>
+
+                <Slider
+                  value={price}
+                  onValueChange={value => setPrice(value)}
+                  maximumValue={1000}
+                  minimumValue={1}
+                  step={1}
+                  thumbTintColor={colors.primary}
+                />
+                <View style={modelStyles.sliderText}>
+                  <Text style={modelStyles.textSliderValue}>{price} $</Text>
+                  <Text style={modelStyles.textSliderValue}>1000 $</Text>
                 </View>
-                <View style={{flexDirection: 'row', paddingTop: 10}}>
-                  <Chip
-                    text={'Humour and satire'}
-                    textColor={colors.textColor}
-                    style={{marginLeft: 10}}
-                  />
-                  <Chip
-                    text={'Romance'}
-                    style={{marginLeft: 10}}
-                    textColor={colors.textColor}
-                  />
-                </View>
-                <View style={{flexDirection: 'row', paddingTop: 10}}>
-                  <Chip
-                    text={'War'}
-                    textColor={colors.textColor}
-                    style={{marginLeft: 10}}
+              </View>
+              <View style={modelStyles.languageContainer}>
+                <Text
+                  style={[
+                    modelStyles.categoryTitle,
+                    {marginTop: 20, marginBottom: 10},
+                  ]}>
+                  Language
+                </Text>
+
+                <View>
+                  <BouncyCheckbox
+                    style={{marginTop: 5}}
+                    size={25}
+                    fillColor={colors.secandry}
+                    unfillColor="#FFFFFF"
+                    text="Arabic"
+                    iconStyle={{borderColor: colors.primary}}
+                    innerIconStyle={{borderWidth: 2}}
+                    textStyle={{
+                      fontFamily: 'JosefinSans-Regular',
+                      textDecorationLine: 'none',
+                    }}
                   />
 
-                  <Chip
-                    text={'Women’s fiction'}
-                    style={{marginLeft: 10}}
-                    textColor={colors.textColor}
+                  <BouncyCheckbox
+                    style={{marginTop: 5}}
+                    size={25}
+                    fillColor={colors.secandry}
+                    unfillColor="#FFFFFF"
+                    text="English"
+                    iconStyle={{borderColor: colors.primary}}
+                    innerIconStyle={{borderWidth: 2}}
+                    textStyle={{
+                      fontFamily: 'JosefinSans-Regular',
+                      textDecorationLine: 'none',
+                    }}
                   />
 
-                  <Chip
-                    text={'Short stories'}
-                    style={{marginLeft: 10}}
-                    textColor={colors.textColor}
+                  <BouncyCheckbox
+                    style={{marginTop: 5}}
+                    size={25}
+                    fillColor={colors.secandry}
+                    unfillColor="#FFFFFF"
+                    text="French"
+                    iconStyle={{borderColor: colors.primary}}
+                    innerIconStyle={{borderWidth: 2}}
+                    textStyle={{
+                      fontFamily: 'JosefinSans-Regular',
+                      textDecorationLine: 'none',
+                    }}
+                  />
+
+                  <BouncyCheckbox
+                    style={{marginTop: 5}}
+                    size={25}
+                    fillColor={colors.secandry}
+                    unfillColor="#FFFFFF"
+                    text="Spanish"
+                    iconStyle={{borderColor: colors.primary}}
+                    innerIconStyle={{borderWidth: 2}}
+                    textStyle={{
+                      fontFamily: 'JosefinSans-Regular',
+                      textDecorationLine: 'none',
+                    }}
                   />
                 </View>
               </View>
-            </View>
 
-            <View style={modelStyles.sliderContainer}>
-              <Slider
-                value={price}
-                onValueChange={value => setPrice(value)}
-                maximumValue={5000}
-                minimumValue={10}
-                step={1}
-                thumbTintColor={colors.primary}
-              />
-              <View style={modelStyles.sliderText}>
-                <Text style={modelStyles.textSliderValue}>{price} $</Text>
-                <Text style={modelStyles.textSliderValue}>5000 $</Text>
+              <View style={modelStyles.reviewContainer}>
+                <Text
+                  style={[
+                    modelStyles.categoryTitle,
+                    {marginTop: 30, marginBottom: 10},
+                  ]}>
+                  Customer Review
+                </Text>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+
+                    flex: 1,
+                    justifyContent: 'space-between',
+                  }}>
+                  <Review review={1} color={colors.primary}></Review>
+
+                  <RadioButton />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+
+                    flex: 1,
+                    justifyContent: 'space-between',
+                  }}>
+                  <Review review={2} color={colors.primary}></Review>
+
+                  <RadioButton />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+
+                    flex: 1,
+                    justifyContent: 'space-between',
+                  }}>
+                  <Review review={3} color={colors.primary}></Review>
+
+                  <RadioButton />
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+
+                    flex: 1,
+                    justifyContent: 'space-between',
+                  }}>
+                  <Review review={4} color={colors.primary}></Review>
+
+                  <RadioButton />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+
+                    flex: 1,
+                    justifyContent: 'space-between',
+                  }}>
+                  <Review review={5} color={colors.primary}></Review>
+
+                  <RadioButton />
+                </View>
               </View>
             </View>
-            <View style={modelStyles.languageContainer}></View>
-          </View>
-          <View style={modelStyles.buttonContainer}>
-            <Pressable
-              style={[modelStyles.buttonOpen]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={modelStyles.textResetStyle}>Reset</Text>
-            </Pressable>
+          </ScrollView>
+        </View>
 
-            <Pressable
-              style={[modelStyles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={modelStyles.textStyle}>Done</Text>
-            </Pressable>
-          </View>
+        <View style={modelStyles.buttonContainer}>
+          <Pressable
+            style={[modelStyles.buttonOpen]}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={modelStyles.textResetStyle}>Reset</Text>
+          </Pressable>
+
+          <Pressable
+            style={[modelStyles.buttonClose]}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={modelStyles.textStyle}>Done</Text>
+          </Pressable>
         </View>
       </Modal>
     </SafeAreaView>
@@ -391,7 +635,7 @@ const styles = StyleSheet.create({
 
 const modelStyles = StyleSheet.create({
   centeredView: {
-    flex: 1,
+    height: '88%',
 
     justifyContent: 'center',
     alignItems: 'center',
@@ -459,8 +703,8 @@ const modelStyles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     flexDirection: 'row',
+    paddingTop: 10,
     justifyContent: 'space-between',
-    flex: 1,
   },
   sliderContainer: {
     marginLeft: 10,
@@ -481,7 +725,10 @@ const modelStyles = StyleSheet.create({
   },
   languageContainer: {
     width: '80%',
-    flexDirection: 'row',
+  },
+  reviewContainer: {
+    width: '80%',
+    marginBottom: 40,
   },
   title: {
     color: colors.black,
