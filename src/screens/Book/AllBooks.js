@@ -38,7 +38,11 @@ export default function AlBooks({navigation}) {
   const [categoryWar, setCategoryWar] = useState(false);
   const [categoryWomens, setCategoryWomens] = useState(false);
   const [categoryShort, setCategoryShort] = useState(false);
-  const [checked, setChecked] = React.useState('first');
+  const [arabic, setArabic] = useState(false);
+  const [english, setEnglish] = useState(false);
+  const [french, setFrench] = useState(false);
+  const [spanish, setSpanish] = useState(false);
+  const [reviewChecked, setreviewChecked] = React.useState('up1');
 
   const fetchData = async () => {
     try {
@@ -111,6 +115,53 @@ export default function AlBooks({navigation}) {
     </TouchableOpacity>
   );
 
+  const handlFilter = () => {
+    console.log('filter');
+    var array = [];
+
+    if (categoryShort == true) {
+      array.push('Short');
+    }
+    if (categoryWomens == true) {
+      array.push('Womens');
+    }
+    if (categoryWar == true) {
+      array.push('War');
+    }
+    if (categoryRomance == true) {
+      array.push('Romance');
+    }
+    if (categoryHumour == true) {
+      array.push('Humour');
+    }
+    if (categoryHorror == true) {
+      array.push('Horror');
+    }
+    if (categoryHistorical == true) {
+      array.push('Historical');
+    }
+    if (categoryFantasy == true) {
+      array.push('Fantasy');
+    }
+    if (categoryAdventure == true) {
+      array.push('Adventure');
+    }
+    if (categoryClassics == true) {
+      array.push('Classics');
+    }
+    if (categoryCrime == true) {
+      array.push('Crime');
+    }
+    console.log(price);
+    console.log(array);
+    console.log(arabic);
+    console.log(english);
+    console.log(french);
+    console.log(spanish);
+    console.log(reviewChecked);
+    // setModalVisible(!modalVisible);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
@@ -125,7 +176,7 @@ export default function AlBooks({navigation}) {
           <Icon
             style={styles.iconFilter}
             name="options-outline"
-            color={colors.primary}
+            color={colors.secandry}
             onPress={() => setModalVisible(true)}
             size={30}
           />
@@ -159,7 +210,7 @@ export default function AlBooks({navigation}) {
                       <Chip
                         text={'Adventure stories'}
                         textColor={colors.textColor}
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryAdventure === false ? 'outline' : 'fill'}
                       />
                     </TouchableOpacity>
@@ -171,7 +222,7 @@ export default function AlBooks({navigation}) {
                         )
                       }>
                       <Chip
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryClassics === false ? 'outline' : 'fill'}
                         text={'Classics'}
                         textColor={colors.textColor}
@@ -184,7 +235,7 @@ export default function AlBooks({navigation}) {
                         setCategoryCrime(categoryCrime === false ? true : false)
                       }>
                       <Chip
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryCrime === false ? 'outline' : 'fill'}
                         text={'Crime'}
                         textColor={colors.textColor}
@@ -201,7 +252,7 @@ export default function AlBooks({navigation}) {
                         )
                       }>
                       <Chip
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryFantasy === false ? 'outline' : 'fill'}
                         text={'Fantasy'}
                         style={{}}
@@ -216,7 +267,7 @@ export default function AlBooks({navigation}) {
                         )
                       }>
                       <Chip
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryHistorical === false ? 'outline' : 'fill'}
                         style={{marginLeft: 10}}
                         text={'Historical fiction'}
@@ -231,7 +282,7 @@ export default function AlBooks({navigation}) {
                         )
                       }>
                       <Chip
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryHorror === false ? 'outline' : 'fill'}
                         style={{marginLeft: 10}}
                         text={'Horror'}
@@ -248,7 +299,7 @@ export default function AlBooks({navigation}) {
                         )
                       }>
                       <Chip
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryHumour === false ? 'outline' : 'fill'}
                         text={'Humour and satire'}
                         textColor={colors.textColor}
@@ -264,7 +315,7 @@ export default function AlBooks({navigation}) {
                       }>
                       <Chip
                         text={'Romance'}
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryRomance === false ? 'outline' : 'fill'}
                         style={{marginLeft: 10}}
                         textColor={colors.textColor}
@@ -278,7 +329,7 @@ export default function AlBooks({navigation}) {
                       }>
                       <Chip
                         text={'War'}
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryWar === false ? 'outline' : 'fill'}
                         textColor={colors.textColor}
                         style={{}}
@@ -294,7 +345,7 @@ export default function AlBooks({navigation}) {
                       <Chip
                         text={'Women’s fiction'}
                         style={{marginLeft: 10}}
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryWomens === false ? 'outline' : 'fill'}
                         textColor={colors.textColor}
                       />
@@ -305,7 +356,7 @@ export default function AlBooks({navigation}) {
                         setCategoryShort(categoryShort === false ? true : false)
                       }>
                       <Chip
-                        color={colors.primary}
+                        color={colors.secandry}
                         type={categoryShort === false ? 'outline' : 'fill'}
                         text={'Short stories'}
                         style={{marginLeft: 10}}
@@ -327,7 +378,7 @@ export default function AlBooks({navigation}) {
                   maximumValue={1000}
                   minimumValue={1}
                   step={1}
-                  thumbTintColor={colors.primary}
+                  thumbTintColor={colors.secandry}
                 />
                 <View style={modelStyles.sliderText}>
                   <Text style={modelStyles.textSliderValue}>{price} $</Text>
@@ -350,6 +401,8 @@ export default function AlBooks({navigation}) {
                     fillColor={colors.secandry}
                     unfillColor="#FFFFFF"
                     text="Arabic"
+                    isChecked={arabic}
+                    onPress={() => setArabic(!arabic)}
                     iconStyle={{borderColor: colors.primary}}
                     innerIconStyle={{borderWidth: 2}}
                     textStyle={{
@@ -364,6 +417,8 @@ export default function AlBooks({navigation}) {
                     fillColor={colors.secandry}
                     unfillColor="#FFFFFF"
                     text="English"
+                    isChecked={english}
+                    onPress={() => setEnglish(!english)}
                     iconStyle={{borderColor: colors.primary}}
                     innerIconStyle={{borderWidth: 2}}
                     textStyle={{
@@ -378,6 +433,8 @@ export default function AlBooks({navigation}) {
                     fillColor={colors.secandry}
                     unfillColor="#FFFFFF"
                     text="French"
+                    isChecked={french}
+                    onPress={() => setFrench(!french)}
                     iconStyle={{borderColor: colors.primary}}
                     innerIconStyle={{borderWidth: 2}}
                     textStyle={{
@@ -390,6 +447,8 @@ export default function AlBooks({navigation}) {
                     style={{marginTop: 5}}
                     size={25}
                     fillColor={colors.secandry}
+                    isChecked={spanish}
+                    onPress={() => setSpanish(!spanish)}
                     unfillColor="#FFFFFF"
                     text="Spanish"
                     iconStyle={{borderColor: colors.primary}}
@@ -420,7 +479,12 @@ export default function AlBooks({navigation}) {
                   }}>
                   <Review review={1} color={colors.primary}></Review>
 
-                  <RadioButton />
+                  <RadioButton
+                    value="up1"
+                    color={colors.secandry}
+                    status={reviewChecked === 'up1' ? 'checked' : 'unchecked'}
+                    onPress={() => setreviewChecked('up1')}
+                  />
                 </View>
                 <View
                   style={{
@@ -431,7 +495,12 @@ export default function AlBooks({navigation}) {
                   }}>
                   <Review review={2} color={colors.primary}></Review>
 
-                  <RadioButton />
+                  <RadioButton
+                    value="up2"
+                    color={colors.secandry}
+                    status={reviewChecked === 'up2' ? 'checked' : 'unchecked'}
+                    onPress={() => setreviewChecked('up2')}
+                  />
                 </View>
                 <View
                   style={{
@@ -442,7 +511,12 @@ export default function AlBooks({navigation}) {
                   }}>
                   <Review review={3} color={colors.primary}></Review>
 
-                  <RadioButton />
+                  <RadioButton
+                    value="up3"
+                    color={colors.secandry}
+                    status={reviewChecked === 'up3' ? 'checked' : 'unchecked'}
+                    onPress={() => setreviewChecked('up3')}
+                  />
                 </View>
 
                 <View
@@ -454,7 +528,12 @@ export default function AlBooks({navigation}) {
                   }}>
                   <Review review={4} color={colors.primary}></Review>
 
-                  <RadioButton />
+                  <RadioButton
+                    value="up4"
+                    color={colors.secandry}
+                    status={reviewChecked === 'up4' ? 'checked' : 'unchecked'}
+                    onPress={() => setreviewChecked('up4')}
+                  />
                 </View>
                 <View
                   style={{
@@ -465,7 +544,12 @@ export default function AlBooks({navigation}) {
                   }}>
                   <Review review={5} color={colors.primary}></Review>
 
-                  <RadioButton />
+                  <RadioButton
+                    value="up5"
+                    color={colors.secandry}
+                    status={reviewChecked === 'up5' ? 'checked' : 'unchecked'}
+                    onPress={() => setreviewChecked('up5')}
+                  />
                 </View>
               </View>
             </View>
@@ -479,9 +563,7 @@ export default function AlBooks({navigation}) {
             <Text style={modelStyles.textResetStyle}>Reset</Text>
           </Pressable>
 
-          <Pressable
-            style={[modelStyles.buttonClose]}
-            onPress={() => setModalVisible(!modalVisible)}>
+          <Pressable style={[modelStyles.buttonClose]} onPress={handlFilter}>
             <Text style={modelStyles.textStyle}>Done</Text>
           </Pressable>
         </View>
@@ -554,7 +636,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    top: 25,
+    top: 10,
   },
   popularText: {
     paddingLeft: 20,
@@ -615,7 +697,7 @@ const styles = StyleSheet.create({
     height: imageHeight,
   },
   trendingBooks: {
-    top: 60,
+    top: 20,
     left: 20,
     marginBottom: '12%',
   },
