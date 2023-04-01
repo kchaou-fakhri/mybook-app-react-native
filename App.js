@@ -164,14 +164,14 @@ export default function App() {
 }
 
 import React from 'react';
-import SplashScreen from './screens/Home/SplashScreen';
+import SplashScreen from './src/screens/Home/SplashScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Login from './screens/Auth/Login';
-import Register from './screens/Auth/Register';
-import BottomNavigation from './screens/Home/BottomNavigation';
-import Details from './screens/Book/Details';
-import BookListSeeMore from './screens/Book/BookListSeeMore';
+import Login from './src/screens/Auth/Login';
+import Register from './src/screens/Auth/Register';
+import BottomNavigation from './src/screens/Home/BottomNavigation';
+import Details from './src/screens/Book/Details';
+import BookListSeeMore from './src/screens/Book/BookListSeeMore';
 
 const Stack = createNativeStackNavigator();
 
