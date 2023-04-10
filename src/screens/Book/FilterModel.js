@@ -17,7 +17,7 @@ import {RadioButton} from 'react-native-paper';
 import {filterBooks} from '../../services/books/FetchBook';
 
 export default function FilterModel(props) {
-  const [price, setPrice] = useState(10);
+  const [price, setPrice] = useState(0);
   const [categoryAdventure, setCategoryAdventure] = useState(false);
   const [categoryClassics, setCategoryClassics] = useState(false);
   const [categoryCrime, setCategoryCrime] = useState(false);
@@ -33,11 +33,27 @@ export default function FilterModel(props) {
   const [english, setEnglish] = useState(false);
   const [french, setFrench] = useState(false);
   const [spanish, setSpanish] = useState(false);
-  const [reviewChecked, setreviewChecked] = React.useState('up1');
+  const [reviewChecked, setreviewChecked] = React.useState('0');
 
-  const handlFilter = () => {
+  const handlFilter = async () => {
     console.log('filter');
     var array = [];
+    var languages = [];
+
+    if (arabic == true) {
+      languages.push('ar');
+    }
+
+    if (english == true) {
+      languages.push('en');
+    }
+    if (spanish == true) {
+      languages.push('sp');
+    }
+
+    if (french == true) {
+      languages.push('fr');
+    }
 
     if (categoryShort == true) {
       array.push('Short');
@@ -72,26 +88,15 @@ export default function FilterModel(props) {
     if (categoryCrime == true) {
       array.push('Crime');
     }
-    {
-      /* console.log(price);
+    var reviewValue = reviewChecked == 0 ? 0 : reviewChecked.substring(2, 3);
+
+    console.log(price);
     console.log(array);
-    console.log(arabic);
-    console.log(english);
-    console.log(french);
-    console.log(spanish);
-    console.log(reviewChecked);
-*/
-    }
-    var fil = filterBooks(
-      price,
-      array,
-      arabic,
-      english,
-      french,
-      spanish,
-      reviewChecked,
-    );
-    console.log(fil);
+    console.log(languages);
+    console.log(reviewValue);
+    var data = await filterBooks(price, array, languages, reviewValue);
+
+    props.data(data);
     props.callparentfunction();
   };
 

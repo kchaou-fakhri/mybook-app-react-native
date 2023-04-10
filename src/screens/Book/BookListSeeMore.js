@@ -25,7 +25,7 @@ export default function BookListSeeMore({navigation}) {
       const token = await AsyncStorage.getItem('token');
       console.log(token);
       const response = await fetch(
-        ConfigWs.BaseUrl + 'books',
+        ConfigWs.BaseUrl + 'books/0',
 
         {
           method: 'GET',
@@ -69,13 +69,18 @@ export default function BookListSeeMore({navigation}) {
           style={styles.imageTrending}
         />
         <View style={{left: '10%', flex: 1}}>
-          <Text>{book.title}</Text>
+          <Text
+            style={{
+              textAlign: 'left',
+            }}>
+            {book.title}
+          </Text>
           <Text>By John Welser</Text>
           <View style={{top: 10}}>
             <Review
               color={colors.secandry}
               nbStart={5}
-              review={3.7}
+              review={book.review}
               size={20}
             />
           </View>

@@ -33,7 +33,7 @@ export default class Home extends Component {
       const token = await AsyncStorage.getItem('token');
       console.log(token);
       const response = await fetch(
-        config.BaseUrl + 'books',
+        config.BaseUrl + 'books/0',
 
         {
           method: 'GET',
@@ -48,7 +48,7 @@ export default class Home extends Component {
       if (response != null) {
         if (response.status === 200) {
           const json = await response.json();
-
+          console.log('Start Display data');
           this.setState({data: json});
 
           console.log(json);
@@ -102,13 +102,18 @@ export default class Home extends Component {
             style={styles.imageTrending}
           />
           <View style={{left: '10%', flex: 1}}>
-            <Text>{book.title}</Text>
+            <Text
+              style={{
+                textAlign: 'left',
+              }}>
+              {book.title}
+            </Text>
             <Text>By John Welser</Text>
             <View style={{top: 10}}>
               <Review
                 color={colors.secandry}
                 nbStart={5}
-                review={3.7}
+                review={book.review}
                 size={20}
               />
             </View>
