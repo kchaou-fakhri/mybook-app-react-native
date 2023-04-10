@@ -73,7 +73,7 @@ export default function Details(props) {
           <Animated.View style={[styles.iconBackStyle, {width: iconWidth}]}>
             <Icon
               style={{marginLeft: 5}}
-              name="chevron-back-outline"
+              name={'chevron-back-outline'}
               color={colors.primary}
               size={34}
             />
@@ -95,9 +95,7 @@ export default function Details(props) {
               onPress={() => {
                 navigation.goBack(null);
               }}>
-              <View>
-                <Icon name="" color={colors.primary} size={34} />
-              </View>
+              <View></View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleIcon}>
@@ -123,7 +121,7 @@ export default function Details(props) {
             <Review
               color={colors.secandry}
               nbStart={5}
-              review={3.7}
+              review={route.params.params.review}
               size={20}
             />
           </View>
@@ -413,22 +411,20 @@ const styles = StyleSheet.create({
   },
 
   textStyle: {
-    top: 15,
+    top: 18,
+    lineHeight: 18,
+    color: colors.textColor,
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: 14,
   },
   modalText: {
-    marginTop: -10,
     marginBottom: 15,
-    textAlign: 'center',
     color: colors.textColor,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   closeBtn: {alignSelf: 'flex-end', fontSize: 20, color: colors.red, top: -10},
 
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
 
