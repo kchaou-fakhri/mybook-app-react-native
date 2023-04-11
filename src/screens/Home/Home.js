@@ -18,6 +18,7 @@ import colors from '../utils/colors';
 import config from '../../config/ConfigWs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
+import strings from '../utils/strings';
 export default class Home extends Component {
   state = {
     data: [],
@@ -120,10 +121,10 @@ export default class Home extends Component {
           </View>
           <View
             style={{
-              right: '25%',
+              right: '30%',
               top: 20,
             }}>
-            <Icon name="ios-basket" size={40} color={colors.primary} />
+            <Text style={styles.title}>${book.price}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -143,11 +144,11 @@ export default class Home extends Component {
           </View>
 
           <View style={styles.popularContainer}>
-            <Text style={styles.popularText}>Popular New</Text>
+            <Text style={styles.popularText}>{strings.popular_new}</Text>
             <Text
               style={styles.showAllText}
               onPress={() => navigation.navigate('BookListSeeMore')}>
-              Show all
+              {strings.show_all}
             </Text>
           </View>
 
@@ -169,11 +170,11 @@ export default class Home extends Component {
           </View>
 
           <View style={[styles.popularContainer, {top: 45}]}>
-            <Text style={styles.popularText}>Trending Books</Text>
+            <Text style={styles.popularText}>{strings.trending_books}</Text>
             <Text
               style={styles.showAllText}
               onPress={() => navigation.navigate('BookListSeeMore')}>
-              Show all
+              {strings.show_all}
             </Text>
           </View>
           <View style={styles.trendingBooks}>
@@ -225,6 +226,7 @@ if (Device.isTablet && width > 1000) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     backgroundColor: colors.white,
   },
   input: {

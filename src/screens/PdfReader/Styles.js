@@ -5,7 +5,6 @@ export default styles = StyleSheet.create({
     flex: 1,
 
     alignItems: 'center',
-    marginTop: 25,
   },
   pdf: {
     flex: 1,
