@@ -16,6 +16,7 @@ import Device from 'react-native-device-detection';
 import colors from '../utils/colors';
 import {Review} from 'dev0kch-review';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
+import strings from '../utils/strings';
 
 export default function Details(props) {
   const {route, navigation} = props;
@@ -133,7 +134,7 @@ export default function Details(props) {
               ? styles.priceContainer
               : styles.priceContainerLandscape
           }>
-          <Text style={styles.title}>Description</Text>
+          <Text style={styles.title}>{strings.description}</Text>
           <Text style={styles.price}>${route.params.params.price}</Text>
         </View>
 
@@ -172,7 +173,7 @@ export default function Details(props) {
                   params: route.params.params,
                 })
               }>
-              Read now
+              {strings.btn_buy}
             </Text>
           </TouchableHighlight>
         </View>

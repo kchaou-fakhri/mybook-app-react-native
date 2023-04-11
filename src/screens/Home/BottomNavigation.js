@@ -59,14 +59,34 @@ export default function BottomNavigation(props) {
         headerShown: true,
         headerStyle: {height: 90},
         headerTitle: props => <LogoTitle {...props} />,
-        tabBarStyle: {height: 60, paddingBottom: 3},
+        tabBarStyle: {
+          display: 'flex',
+          position: 'absolute',
+          bottom: 10,
+          left: 20,
+          right: 20,
+          elevation: 5,
+          backgroundColor: colors.primary,
+          borderRadius: 30,
+          height: 55,
+        },
+        tabBarShowLabel: false,
       }}>
       <Tab.Screen
         name="Home"
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="home-outline" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                top: Platform.OS === 'ios' ? 10 : 0,
+              }}>
+              <Icon
+                name="ios-list-outline"
+                size={30}
+                color={focused ? colors.secandry : colors.white}
+              />
+            </View>
           ),
         }}
         component={Home}
@@ -75,9 +95,17 @@ export default function BottomNavigation(props) {
       <Tab.Screen
         name="All"
         options={{
-          tabBarLabel: 'All',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="grid" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                top: Platform.OS === 'ios' ? 10 : 0,
+              }}>
+              <Icon
+                name="grid"
+                size={30}
+                color={focused ? colors.secandry : colors.white}
+              />
+            </View>
           ),
         }}
         component={AllBooks}
@@ -86,10 +114,25 @@ export default function BottomNavigation(props) {
       <Tab.Screen
         name="Profile"
         options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="person-outline" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                top: Platform.OS === 'ios' ? -10 : -20,
+                width: Platform.OS === 'ios' ? 50 : 60,
+                height: Platform.OS === 'ios' ? 50 : 60,
+                borderRadius: Platform.OS === 'ios' ? 25 : 30,
+                backgroundColor: colors.secandry,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon
+                name="md-book-outline"
+                size={Platform.OS === 'ios' ? 30 : 40}
+                color={focused ? colors.white : colors.black}
+              />
+            </View>
           ),
+          tabBarIconStyle: {},
         }}
         component={Profile}
       />
@@ -99,8 +142,17 @@ export default function BottomNavigation(props) {
         options={{
           headerShown: false,
           tabBarLabel: 'My Book',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="book-outline" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                top: Platform.OS === 'ios' ? 10 : 0,
+              }}>
+              <Icon
+                name="md-person"
+                size={30}
+                color={focused ? colors.secandry : colors.white}
+              />
+            </View>
           ),
         }}
         component={MyBook}
@@ -109,8 +161,18 @@ export default function BottomNavigation(props) {
       <Tab.Screen
         options={{
           tabBarLabel: 'Settings',
-          tabBarIcon: ({color, size}) => (
-            <Icon name="settings-outline" color={color} size={size} />
+
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                top: Platform.OS === 'ios' ? 10 : 0,
+              }}>
+              <Icon
+                name="settings-outline"
+                size={30}
+                color={focused ? colors.secandry : colors.white}
+              />
+            </View>
           ),
         }}
         name="Settings"
