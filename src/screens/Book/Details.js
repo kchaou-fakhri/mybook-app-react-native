@@ -21,7 +21,6 @@ export default function Details(props) {
   const {route, navigation} = props;
   let des = route.params.params.description;
 
-  const iconWidth = useRef(new Animated.Value(180)).current;
   const [heartIcon, setHeartIcon] = useState('heart-outline');
   const [landscape, setLandscape] = useState(
     Dimensions.get('window').width > Dimensions.get('window').height
@@ -43,12 +42,6 @@ export default function Details(props) {
   });
 
   const handlBack = () => {
-    Animated.timing(iconWidth, {
-      toValue: 45,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-
     setTimeout(() => {
       navigation.goBack(null);
     }, 300);
@@ -70,14 +63,14 @@ export default function Details(props) {
     <SafeAreaView style={[styles.container, {flexDirection: landscape}]}>
       <View style={styles.iconBackContainer}>
         <TouchableOpacity onPress={handlBack}>
-          <Animated.View style={[styles.iconBackStyle, {width: iconWidth}]}>
+          <View style={[styles.iconBackStyle, {width: 45}]}>
             <Icon
               style={{marginLeft: 5}}
               name={'chevron-back-outline'}
               color={colors.primary}
               size={34}
             />
-          </Animated.View>
+          </View>
         </TouchableOpacity>
       </View>
       <View style={styles.bookContainer}>
@@ -172,7 +165,15 @@ export default function Details(props) {
                 ? styles.touchableHighlight
                 : styles.touchableHighlightLandscape
             }>
-            <Text style={[styles.loginBoutton]}>Buy now</Text>
+            <Text
+              style={[styles.loginBoutton]}
+              onPress={() =>
+                navigation.navigate('Reader', {
+                  params: route.params.params,
+                })
+              }>
+              Read now
+            </Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -202,8 +203,8 @@ var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 // Mobile Styles
-let imagewidth = width / 1.5;
-let imageHeight = height / 2.5;
+let imagewidth = width / 1.6;
+let imageHeight = height / 2.8;
 let searchWidth = width - 70;
 let direction = 'column';
 

@@ -94,9 +94,19 @@ export default function FilterModel(props) {
     console.log(array);
     console.log(languages);
     console.log(reviewValue);
-    var data = await filterBooks(price, array, languages, reviewValue);
+    var data = await filterBooks(
+      price == 0 ? 0 : price[0],
+      array,
+      languages,
+      reviewValue,
+    );
+    console.log(data);
+    if (data != '') {
+      props.data(data);
+    } else {
+      props.data([]);
+    }
 
-    props.data(data);
     props.callparentfunction();
   };
 
@@ -281,8 +291,8 @@ export default function FilterModel(props) {
               <Slider
                 value={price}
                 onValueChange={value => setPrice(value)}
-                maximumValue={1000}
-                minimumValue={1}
+                maximumValue={300}
+                minimumValue={0}
                 step={1}
                 thumbTintColor={colors.secandry}
               />

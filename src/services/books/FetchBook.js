@@ -33,6 +33,7 @@ export const filterBooks = async (
         return json;
       } else {
         console.log('wr : ' + response.json);
+        return [];
       }
     }
   } catch (error) {

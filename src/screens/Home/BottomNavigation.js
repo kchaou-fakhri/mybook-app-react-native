@@ -17,7 +17,7 @@ import Home from '../Home/Home.js';
 import Search from '../Search/Search.js';
 import Profile from '../Profile/Profile.js';
 import MyBook from '../MyBook/MyBook.js';
-import AllBooks from '../Book/AllBooks'
+import AllBooks from '../Book/AllBooks';
 import colors from '../utils/colors.js';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -97,6 +97,7 @@ export default function BottomNavigation(props) {
       <Tab.Screen
         name="MyBook"
         options={{
+          headerShown: false,
           tabBarLabel: 'My Book',
           tabBarIcon: ({color, size}) => (
             <Icon name="book-outline" color={color} size={size} />
