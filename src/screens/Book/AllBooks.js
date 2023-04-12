@@ -20,7 +20,7 @@ import Device from 'react-native-device-detection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfigWs from '../../config/ConfigWs';
 
-import FilterModel from './FilterModel';
+import FilterModel from '../UIcomponent/FilterModel';
 
 export default function AlBooks({navigation}) {
   const [data, setData] = useState([]);
