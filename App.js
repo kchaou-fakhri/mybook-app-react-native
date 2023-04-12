@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/screens/Auth/Login';
 import Register from './src/screens/Auth/Register';
-import BottomNavigation from './src/screens/Home/BottomNavigation';
+import BottomNavigation from './src/screens/Navigation/BottomNavigation';
 import Details from './src/screens/Book/Details';
 import BookListSeeMore from './src/screens/Book/BookListSeeMore';
 import Reader from './src/screens/PdfReader/Reader';

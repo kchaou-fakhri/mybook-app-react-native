@@ -124,7 +124,9 @@ export default class Home extends Component {
               right: '30%',
               top: 20,
             }}>
-            <Text style={styles.title}>${book.price}</Text>
+            <Text style={[styles.title, {fontSize: 14}]}>
+              ${parseFloat(book.price).toFixed(2)}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>

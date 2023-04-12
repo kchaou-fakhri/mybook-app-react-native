@@ -17,7 +17,7 @@ import Home from '../Home/Home.js';
 import Search from '../Search/Search.js';
 import Profile from '../Profile/Profile.js';
 import MyBook from '../MyBook/MyBook.js';
-import AllBooks from '../Book/AllBooks';
+import AllBooks from '../Book/AllBooks.js';
 import colors from '../utils/colors.js';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -62,12 +62,10 @@ export default function BottomNavigation(props) {
         tabBarStyle: {
           display: 'flex',
           position: 'absolute',
-          bottom: 10,
-          left: 20,
-          right: 20,
+
           elevation: 5,
           backgroundColor: colors.primary,
-          borderRadius: 30,
+
           height: 55,
         },
         tabBarShowLabel: false,
@@ -118,17 +116,20 @@ export default function BottomNavigation(props) {
             <View
               style={{
                 top: Platform.OS === 'ios' ? -10 : -20,
-                width: Platform.OS === 'ios' ? 50 : 60,
-                height: Platform.OS === 'ios' ? 50 : 60,
-                borderRadius: Platform.OS === 'ios' ? 25 : 30,
+                width: Platform.OS === 'ios' ? 50 : 65,
+                height: Platform.OS === 'ios' ? 50 : 65,
+                borderRadius: Platform.OS === 'ios' ? 25 : 50,
                 backgroundColor: colors.secandry,
+                borderColor: colors.white,
+                marginBottom: 15,
+                borderWidth: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
               <Icon
                 name="md-book-outline"
-                size={Platform.OS === 'ios' ? 30 : 40}
-                color={focused ? colors.white : colors.black}
+                size={Platform.OS === 'ios' ? 30 : 30}
+                color={focused ? colors.white : colors.white}
               />
             </View>
           ),
