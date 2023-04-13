@@ -112,7 +112,7 @@ export default class Home extends Component {
             <Text>By John Welser</Text>
             <View style={{top: 10}}>
               <Review
-                color={colors.secandry}
+                color={colors.primary_200}
                 nbStart={5}
                 review={book.review}
                 size={20}

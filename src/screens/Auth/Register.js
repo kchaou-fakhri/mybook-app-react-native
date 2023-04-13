@@ -19,6 +19,7 @@ import Rest_API from '../../config/ConfigWs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Modal} from 'react-native-paper';
 import {LinesLoader} from 'react-native-indicator';
+import styles from './assets/RegisterStyles';
 
 export default function Register({navigation}) {
   const [email, setEmail] = useState('');
@@ -249,82 +250,106 @@ export default function Register({navigation}) {
 
   return (
     <SafeAreaView style={styles.conatiner}>
-      <ImageBackground
-        style={[
-          styles.conatiner,
-          {justifyContent: 'center', width: '100%', height: '100%'},
-        ]}
-        source={require('../../assets/background-1.png')}>
-        <StatusBar barStyle={'dark-content'} translucent />
-        <View
-          style={{
-            flex: 1,
-            top: '5%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+      <View style={{flex: 1}}>
+        <View style={styles.titleContainer}>
           <View
             style={{
-              alignSelf: 'flex-start',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-            }}>
-            <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
-            <Text style={styles.textKeepYourMind}>Keep your mind</Text>
-          </View>
+              width: 400,
+              height: 400,
+              borderRadius: 400,
+              top: -150,
+              left: -130,
 
-          <View>
-            <TextInput
-              placeholder="username"
-              onChangeText={handleChangeUserName}
-              style={styles.input}
-            />
-            <Text style={usernameTextError(checkUsername)}>
-              {textErrorUsername}
-            </Text>
-          </View>
-          <View>
-            <TextInput
-              placeholder="e-mail"
-              onChangeText={handleChangeEmail}
-              style={styles.input}
-            />
-            <Text style={emailTextError(checkEmail)}>{textErrorEmail}</Text>
-          </View>
-          <View>
-            <TextInput
-              placeholder="Password"
-              onChangeText={handleChangePassword}
-              style={styles.input}
-            />
-            <Text style={passwordTextError(checkPassword)}>
-              {textErrorPassword}
-            </Text>
-          </View>
-          <View>
-            <TouchableHighlight style={styles.touchableHighlight}>
-              <Text
-                style={[
-                  styles.loginBoutton,
-                  {color: visibleLoading ? colors.primary : colors.white},
-                ]}
-                onPress={register}>
-                Register
-              </Text>
-            </TouchableHighlight>
+              position: 'absolute',
+              backgroundColor: colors.primary_400,
+            }}></View>
+          <View
+            style={{
+              width: 300,
+              height: 300,
+              borderRadius: 300,
+              top: -150,
+              left: -150,
+
+              position: 'absolute',
+              backgroundColor: colors.primary_200,
+            }}></View>
+
+          <Text style={styles.title}>Create your</Text>
+          <Text style={styles.title}>Account</Text>
+        </View>
+        <StatusBar barStyle={'dark-content'} translucent />
+        <View style={{flex: 1}}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <View
               style={{
-                justifyContent: 'center',
-                display: visibleLoading ? 'flex' : 'none',
-                bottom: 10,
-                alignItems: 'center',
+                alignSelf: 'flex-start',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
               }}>
-              <LinesLoader barNumber={4} barHeight={30} color={colors.white} />
+              <Text style={styles.textWelecome}>Welcome to MyBook!</Text>
+              <Text style={styles.textKeepYourMind}>Keep your mind</Text>
+            </View>
+
+            <View>
+              <TextInput
+                placeholder="username"
+                onChangeText={handleChangeUserName}
+                style={styles.input}
+              />
+              <Text style={usernameTextError(checkUsername)}>
+                {textErrorUsername}
+              </Text>
+            </View>
+            <View>
+              <TextInput
+                placeholder="e-mail"
+                onChangeText={handleChangeEmail}
+                style={styles.input}
+              />
+              <Text style={emailTextError(checkEmail)}>{textErrorEmail}</Text>
+            </View>
+            <View>
+              <TextInput
+                placeholder="Password"
+                onChangeText={handleChangePassword}
+                style={styles.input}
+              />
+              <Text style={passwordTextError(checkPassword)}>
+                {textErrorPassword}
+              </Text>
+            </View>
+            <View>
+              <TouchableHighlight style={styles.touchableHighlight}>
+                <Text
+                  style={[
+                    styles.loginBoutton,
+                    {color: visibleLoading ? colors.secandry : colors.primary},
+                  ]}
+                  onPress={register}>
+                  Register
+                </Text>
+              </TouchableHighlight>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  display: visibleLoading ? 'flex' : 'none',
+                  bottom: 10,
+                  alignItems: 'center',
+                }}>
+                <LinesLoader
+                  barNumber={4}
+                  barHeight={30}
+                  color={colors.white}
+                />
+              </View>
             </View>
           </View>
-        </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+
           <View style={styles.containerGoToSinup}>
             <Text style={styles.textGoToSinup}>
               already have an accoun?{' '}
@@ -335,8 +360,7 @@ export default function Register({navigation}) {
               </Text>{' '}
             </Text>
           </View>
-        </KeyboardAvoidingView>
-
+        </View>
         <Modal animationType="slide" transparent={true} visible={visible}>
           <TouchableOpacity
             onPress={() => {
@@ -374,120 +398,7 @@ export default function Register({navigation}) {
             </View>
           </TouchableOpacity>
         </Modal>
-      </ImageBackground>
+      </View>
     </SafeAreaView>
   );
 }
-
-var height = Dimensions.get('window').height;
-var width = Dimensions.get('window').width;
-
-const styles = StyleSheet.create({
-  conatiner: {
-    flex: 1,
-    backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  square: {
-    width: 100,
-    height: 100,
-    backgroundColor: colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    borderBottomRightRadius: 0,
-    marginBottom: 10,
-  },
-  textLogo: {
-    color: colors.white,
-    // transform: [{ rotate: '180deg'}],
-    fontSize: 20,
-    fontFamily: 'Quicksand-Regular',
-  },
-  textWelecome: {
-    top: '5%',
-    left: 15,
-    color: colors.primary,
-    // transform: [{ rotate: '180deg'}],
-    fontSize: 20,
-
-    color: colors.textColor,
-    textAlign: 'center',
-  },
-  textKeepYourMind: {
-    color: colors.primary,
-    // transform: [{ rotate: '180deg'}],
-    fontSize: 13,
-    top: '5%',
-    color: colors.textColor,
-    textAlign: 'center',
-    marginBottom: 30,
-    left: 15,
-  },
-  loginBoutton: {
-    backgroundColor: colors.primary,
-    color: colors.white,
-    flex: 1,
-    borderRadius: 50,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  },
-  input: {
-    height: 55,
-    width: width - 50,
-    margin: 12,
-    borderWidth: 1.3,
-    borderRadius: 5,
-    padding: 10,
-
-    borderColor: colors.gray,
-  },
-  touchableHighlight: {
-    height: 50,
-    width: width - 50,
-    top: 30,
-  },
-
-  forgotpassword: {
-    color: colors.primary,
-    fontFamily: 'Quicksand-bold',
-    fontWeight: 'bold',
-    fontSize: 14,
-    top: 55,
-    textAlign: 'center',
-  },
-  containerGoToSinup: {
-    justifyContent: 'center',
-    bottom: 20,
-  },
-  textGoToSinup: {
-    fontFamily: 'Quicksand-bold',
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-
-  textStyle: {
-    textAlign: 'center',
-    fontSize: 13,
-  },
-  modalText: {
-    marginTop: -10,
-    marginBottom: 15,
-    textAlign: 'center',
-    color: colors.textColor,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  closeBtn: {alignSelf: 'flex-end', fontSize: 20, color: colors.red, top: -10},
-
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-  },
-});
