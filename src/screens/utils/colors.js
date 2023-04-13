@@ -1,7 +1,7 @@
 export default {
-  primary: '#000',
+  primary: '#1e2e3d',
   // primary: '#1C3879',
-  secandry: '#519872',
+  secandry: '#c0e862',
   third: '#CBEDD5',
   white: '#fff',
   gray: '#6B728E',
@@ -12,4 +12,6 @@ export default {
   green: '#116557',
   black: '#000',
   black_200: '#111',
+  primary_200: '#29445e',
+  primary_400: '#23374a',
 };

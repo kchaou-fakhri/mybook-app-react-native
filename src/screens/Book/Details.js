@@ -113,7 +113,7 @@ export default function Details(props) {
 
           <View style={{top: 25}}>
             <Review
-              color={colors.secandry}
+              color={colors.primary}
               nbStart={5}
               review={route.params.params.review}
               size={20}
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'rgba(109, 152, 134, 0.5)',
+    backgroundColor: 'rgba(30, 46, 61, 0.3)',
     borderRadius: 50,
   },
 
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'left',
-    color: colors.secandry,
+    color: colors.green,
   },
   textContainer: {
     marginLeft: '8%',
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   },
 
   loginBoutton: {
-    backgroundColor: colors.secandry,
+    backgroundColor: colors.primary,
     color: colors.white,
     fontWeight: 'bold',
     flex: 1,
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   },
   seeMore: {
     fontFamily: 'Quicksand-Regular',
-    color: colors.secandry,
+    color: colors.primary_200,
   },
 
   textStyle: {

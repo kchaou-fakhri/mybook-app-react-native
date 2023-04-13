@@ -84,7 +84,7 @@ export default function AlBooks({navigation}) {
           <Text>By John Welser</Text>
           <View style={{top: 10}}>
             <Review
-              color={colors.secandry}
+              color={colors.primary_200}
               nbStart={5}
               review={book.review}
               size={20}
@@ -93,10 +93,12 @@ export default function AlBooks({navigation}) {
         </View>
         <View
           style={{
-            right: '25%',
+            right: '30%',
             top: 20,
           }}>
-          <Icon name="ios-basket" size={40} color={colors.primary} />
+          <Text style={[styles.title, {fontSize: 14}]}>
+            ${parseFloat(book.price).toFixed(2)}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

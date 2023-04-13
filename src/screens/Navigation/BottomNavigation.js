@@ -41,7 +41,7 @@ function LogoTitle() {
       </View>
 
       <View style={{flexDirection: 'row', right: 20}}>
-        <Icon color={colors.primary} name="notifications-outline" size={30} />
+        <Icon color={colors.primary} name="notifications-outline" size={24} />
         <Text style={styles.numberNotif}>3</Text>
       </View>
     </View>
@@ -62,11 +62,12 @@ export default function BottomNavigation(props) {
         tabBarStyle: {
           display: 'flex',
           position: 'absolute',
-
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
           elevation: 5,
           backgroundColor: colors.primary,
 
-          height: 55,
+          height: 60,
         },
         tabBarShowLabel: false,
       }}>
@@ -81,7 +82,7 @@ export default function BottomNavigation(props) {
               }}>
               <Icon
                 name="ios-list-outline"
-                size={30}
+                size={24}
                 color={focused ? colors.secandry : colors.white}
               />
             </View>
@@ -99,8 +100,8 @@ export default function BottomNavigation(props) {
                 top: Platform.OS === 'ios' ? 10 : 0,
               }}>
               <Icon
-                name="grid"
-                size={30}
+                name="grid-outline"
+                size={24}
                 color={focused ? colors.secandry : colors.white}
               />
             </View>
@@ -128,7 +129,7 @@ export default function BottomNavigation(props) {
               }}>
               <Icon
                 name="md-book-outline"
-                size={Platform.OS === 'ios' ? 30 : 30}
+                size={Platform.OS === 'ios' ? 24 : 24}
                 color={focused ? colors.white : colors.white}
               />
             </View>
@@ -149,8 +150,8 @@ export default function BottomNavigation(props) {
                 top: Platform.OS === 'ios' ? 10 : 0,
               }}>
               <Icon
-                name="md-person"
-                size={30}
+                name="md-person-outline"
+                size={24}
                 color={focused ? colors.secandry : colors.white}
               />
             </View>
@@ -170,7 +171,7 @@ export default function BottomNavigation(props) {
               }}>
               <Icon
                 name="settings-outline"
-                size={30}
+                size={24}
                 color={focused ? colors.secandry : colors.white}
               />
             </View>
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
   textLogoMy: {
     color: colors.primary,
     fontFamily: 'Quicksand-Bold',
-    fontSize: 30,
+    fontSize: 24,
     paddingLeft: 15,
   },
   textLogoBook: {
