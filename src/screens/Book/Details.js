@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   },
   seeMore: {
     fontFamily: 'Quicksand-Regular',
-    color: colors.primary_200,
+    color: colors.green,
   },
 
   textStyle: {

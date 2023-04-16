@@ -62,8 +62,6 @@ export default function BottomNavigation(props) {
         tabBarStyle: {
           display: 'flex',
           position: 'absolute',
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
           elevation: 5,
           backgroundColor: colors.primary,
 
@@ -116,16 +114,7 @@ export default function BottomNavigation(props) {
           tabBarIcon: ({focused}) => (
             <View
               style={{
-                top: Platform.OS === 'ios' ? -10 : -20,
-                width: Platform.OS === 'ios' ? 50 : 65,
-                height: Platform.OS === 'ios' ? 50 : 65,
-                borderRadius: Platform.OS === 'ios' ? 25 : 50,
-                backgroundColor: colors.secandry,
-                borderColor: colors.white,
-                marginBottom: 15,
-                borderWidth: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
+                top: Platform.OS === 'ios' ? 10 : 0,
               }}>
               <Icon
                 name="md-book-outline"
