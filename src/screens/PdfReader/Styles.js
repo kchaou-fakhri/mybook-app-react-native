@@ -3,7 +3,7 @@ import colors from '../utils/colors';
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    top: '4%',
     alignItems: 'center',
   },
   pdf: {
